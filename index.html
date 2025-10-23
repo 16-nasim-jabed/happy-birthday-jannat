@@ -5,24 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy Birthday Jannat! 💕</title>
     <style>
-        /* === GLOBAL & FULL-SCREEN SETUP === */
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            padding: 0;
+        /* === GLOBAL RESET & FULL-SCREEN === */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+            overscroll-behavior: none;
             font-family: 'Georgia', serif;
             background: linear-gradient(-45deg, #ff6b9d, #c44569, #f8b500, #ff9ff3);
             background-size: 400% 400%;
             animation: gradientShift 8s ease infinite;
-            min-height: 100vh;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        html, body {
-            height: 100%;
-            width: 100%;
-            overscroll-behavior: none;
         }
 
         @keyframes gradientShift {
@@ -34,136 +27,61 @@
         .page {
             display: none;
             min-height: 100vh;
-            position: relative;
             width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
+            padding: 15px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
 
         .page.active {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        }
+
+        /* === FIXED CARD SIZE FOR ALL SCREENS === */
+        .welcome-container,
+        .birthday-container,
+        .story-container {
             width: 100%;
-            padding: 15px;
+            max-width: 380px; /* Fixed size — perfect for mobile & consistent on desktop */
+            margin: 0 auto;
+            borderarcy: 25px;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25), 0 5px 15px rgba(255, 107, 157, 0.2);
         }
 
-        /* === MOBILE FULL-SCREEN OPTIMIZATION === */
-        @media (max-width: 768px) {
-            .page.active {
-                padding: 10px;
-                justify-content: flex-start;
-                padding-top: 10vh;
-            }
-
-            .welcome-container,
-            .birthday-container,
-            .story-container {
-                width: 100% !important;
-                max-width: 100% !important;
-                margin: 0 auto;
-                border-radius: 20px;
-                padding: 25px 15px;
-            }
-
-            .welcome-title,
-            .birthday-title {
-                font-size: 1.8rem !important;
-            }
-
-            .welcome-message,
-            .birthday-message {
-                font-size: 1.1rem !important;
-            }
-
-            .heart-button {
-                padding: 16px 24px !important;
-                font-size: 1rem !important;
-                width: 90%;
-                max-width: 300px;
-            }
-
-            .back-button {
-                padding: 14px 28px !important;
-                font-size: 0.95rem !important;
-            }
-
-            .card-footer {
-                font-size: 0.85rem;
-                padding: 10px 16px;
-            }
-        }
-
+        /* === MOBILE ONLY: Slightly smaller text & padding === */
         @media (max-width: 480px) {
-            .page.active {
-                padding: 8px;
-                padding-top: 8vh;
-            }
-
+            .page { padding: 10px; }
             .welcome-container,
             .birthday-container,
             .story-container {
-                padding: 20px 12px;
-                border-radius: 16px;
+                padding: 25px 18px;
+                border-radius: 20px;
             }
-
-            .welcome-title,
-            .birthday-title {
-                font-size: 1.5rem !important;
-            }
-
-            .welcome-message,
-            .birthday-message {
-                font-size: 1rem !important;
-                line-height: 1.6;
-            }
-
-            .heart-button {
-                padding: 14px 20px !important;
-                font-size: 0.9rem !important;
-                width: 95%;
-            }
-
-            .story-content {
-                padding: 16px;
-                font-size: 1rem;
-            }
+            .welcome-title, .birthday-title { font-size: 1.6rem !important; }
+            .welcome-message, .birthday-message { font-size: 1.05rem !important; }
+            .heart-button { padding: 14px 20px !important; font-size: 0.95rem !important; }
+            .story-content { padding: 20px; font-size: 1.05rem; }
         }
 
         @media (max-width: 360px) {
-            .welcome-title,
-            .birthday-title {
-                font-size: 1.3rem !important;
-            }
-
-            .heart-button {
-                padding: 12px 18px !important;
-                font-size: 0.85rem !important;
-            }
+            .welcome-title, .birthday-title { font-size: 1.4rem !important; }
+            .heart-button { padding: 12px 18px !important; font-size: 0.9rem !important; }
         }
 
-        @media (max-height: 600px) and (orientation: landscape) {
-            .page.active {
-                justify-content: flex-start;
-                padding-top: 5vh;
-            }
-
+        /* === LANDSCAPE MOBILE (short height) === */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .page { padding-top: 5vh; justify-content: flex-start; }
             .welcome-container,
-            .birthday-container {
-                margin: 10px auto;
-                padding: 20px 15px;
-            }
-
-            .story-container {
-                max-height: 75vh;
-                margin: 10px auto;
-            }
+            .birthday-container,
+            .story-container { margin: 10px auto; }
         }
 
-        /* === ORIGINAL ANIMATIONS & STYLES (UNCHANGED) === */
-
+        /* === ANIMATIONS === */
         @keyframes shimmer {
             0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
             50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
@@ -171,63 +89,26 @@
         }
 
         @keyframes welcomeFloat {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-10px) scale(1.02); }
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.02); }
         }
 
         @keyframes welcomeFadeOut {
-            0% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
-            100% { opacity: 0; transform: scale(0.95) translateY(-20px); filter: blur(2px); }
+            0% { opacity: 1; transform: scale(1); filter: blur(0); }
+            100% { opacity: 0; transform: scale(0.95) translateY(-15px); filter: blur(2px); }
         }
 
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
-        @keyframes fadeOut { 0% { opacity: 1; transform: scale(1); } 80% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.8); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes loadingDots { 0%, 80%, 100% { transform: scale(0); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
+        @keyframes sparkleFloat { 0% { opacity: 1; transform: translateY(0) scale(0); } 50% { opacity: 1; transform: translateY(-30px) scale(1); } 100% { opacity: 0; transform: translateY(-60px) scale(0); } }
+        @keyframes birthdayEntrance { 0% { opacity: 0; transform: scale(0.5) rotate(10deg); } 100% { opacity: 1; transform: scale(1) rotate(0); } }
+        @keyframes rainbow { 0% { color: #ff6b9d; } 25% { color: #f8b500; } 50% { color: #ff9ff3; } 75% { color: #c44569; } 100% { color: #ff6b9d; } }
+        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } 60% { transform: translateY(-4px); } }
+        @keyframes slideInFromBottom { 0% { opacity: 0;
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes loadingDots {
-            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
-            40% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes sparkleFloat {
-            0% { opacity: 1; transform: translateY(0) scale(0); }
-            50% { opacity: 1; transform: translateY(-30px) scale(1); }
-            100% { opacity: 0; transform: translateY(-60px) scale(0); }
-        }
-
-        @keyframes birthdayEntrance {
-            0% { opacity: 0; transform: scale(0.5) rotate(10deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
-        }
-
-        @keyframes rainbow {
-            0% { color: #ff6b9d; } 25% { color: #f8b500; } 50% { color: #ff9ff3; } 75% { color: #c44569; } 100% { color: #ff6b9d; }
-        }
-
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-8px); }
-            60% { transform: translateY(-4px); }
-        }
-
-        @keyframes slideInFromBottom {
-            0% { opacity: 0; transform: translateY(50px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+ transform: translateY(50px); } 100% { opacity: 1; transform: translateY(0); } }
 
         @keyframes floatBirthdayElement {
             0% { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0; }
@@ -251,309 +132,156 @@
             100% { transform: translateY(-10vh) translateX(0) rotate(360deg) scale(0.3); opacity: 0; }
         }
 
-        @keyframes footerShimmer {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: -100%; }
-        }
+        @keyframes footerShimmer { 0% { left: -100%; } 50% { left: 100%; } 100% { left: -100%; } }
+        @keyframes footerGlow { 0%, 100% { box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3); } 50% { box-shadow: 0 6px 25px rgba(248, 181, 0, 0.4); } }
 
-        @keyframes footerGlow {
-            0%, 100% { box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3); border-color: rgba(255, 255, 255, 0.3); }
-            50% { box-shadow: 0 6px 25px rgba(248, 181, 0, 0.4); border-color: rgba(255, 255, 255, 0.5); }
-        }
-
-        /* === PAGE CONTAINERS === */
+        /* === WELCOME PAGE === */
         .welcome-container {
-            text-align: center;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 40px 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25), 0 5px 15px rgba(255, 107, 157, 0.2);
             border: 2px solid rgba(255, 255, 255, 0.4);
             animation: welcomeFloat 3s ease-in-out infinite, welcomeFadeOut 1.5s ease-in-out 2.5s forwards;
-            max-width: 420px;
-            width: 90%;
-            margin: 10px auto;
-            position: relative;
-            overflow: hidden;
         }
 
         .welcome-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: shimmer 3s ease-in-out infinite;
-            pointer-events: none;
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s ease-in-out infinite; pointer-events: none;
         }
 
         .welcome-title {
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 30px;
-            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(0, 0, 0, 0.9);
-            animation: pulse 2s ease-in-out infinite;
+            font-size: 2.2rem; color: white; margin-bottom: 20px;
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.7); animation: pulse 2s ease-in-out infinite;
             font-weight: bold;
         }
 
         .welcome-message {
-            font-size: 1.4rem;
-            color: white;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.8), 1px 1px 2px rgba(0,0,0,0.9);
-            margin-bottom: 25px;
-            font-style: italic;
-            font-weight: 600;
-            line-height: 1.6;
-        }
-
-        .loading-dots {
-            display: inline-block;
-            margin-top: 20px;
+            font-size: 1.25rem; color: white; margin-bottom: 20px; line-height: 1.6;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.8); font-style: italic; font-weight: 600;
         }
 
         .loading-dots span {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: white;
-            margin: 0 3px;
-            animation: loadingDots 1.4s ease-in-out infinite both;
+            display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+            background: white; margin: 0 3px; animation: loadingDots 1.4s ease-in-out infinite both;
         }
-
         .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
         .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
         .loading-dots span:nth-child(3) { animation-delay: 0s; }
 
-        /* Birthday Page */
+        /* === BIRTHDAY PAGE === */
         .birthday-container {
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            background: linear-gradient(135deg, rgba(255, 182, 193, 0.7), rgba(255, 160, 180, 0.6)), 
-                        url('./download.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            backdrop-filter: blur(15px);
-            border-radius: 25px;
-            padding: 35px 25px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(255, 182, 193, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            max-width: 480px;
-            width: 90%;
-            margin: 10px auto;
-            animation: birthdayEntrance 2s ease-out;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255,182,193,0.7), rgba(255,160,180,0.6)),
+                        url('./download.jpeg') center/cover no-repeat;
+            backdrop-filter: blur(15px); border: 2px solid rgba(255,255,255,0.6);
+            animation: birthdayEntrance 2s ease-out; cursor: pointer; transition: 0.4s;
         }
 
         .birthday-container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: shimmer 4s ease-in-out infinite;
-            pointer-events: none;
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 4s ease-in-out infinite; pointer-events: none;
         }
 
         .birthday-container:hover {
-            transform: scale(1.02);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .sparkle {
-            position: absolute;
-            color: #fff;
-            font-size: 12px;
-            animation: sparkleFloat 3s ease-out forwards;
-            pointer-events: none;
-            z-index: 10;
+            transform: scale(1.02); box-shadow: 0 30px 60px rgba(0,0,0,0.3);
         }
 
         .birthday-title {
-            font-size: 3rem;
-            color: white;
-            margin-bottom: 30px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-            animation: rainbow 3s linear infinite;
+            font-size: 2.4rem; color: white; margin-bottom: 25px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4); animation: rainbow 3s linear infinite;
         }
 
         .birthday-message {
-            font-size: 1.3rem;
-            color: white;
-            line-height: 1.8;
-            margin-bottom: 40px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-            animation: fadeInUp 2s ease-out 0.5s both;
+            font-size: 1.15rem; color: white; line-height: 1.8; margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3); animation: fadeInUp 2s ease-out 0.5s both;
         }
 
         .heart-button {
-            background: linear-gradient(45deg, #ff6b9d, #c44569);
-            color: white;
-            border: none;
-            padding: 20px 40px;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            transition: all 0.4s ease;
-            font-family: 'Georgia', serif;
-            animation: heartbeat 2s ease-in-out infinite;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(45deg, #ff6b9d, #c44569); color: white; border: none;
+            padding: 16px 32px; font-size: 1rem; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: 0.4s; font-family: inherit;
+            animation: heartbeat 2s ease-in-out infinite; position: relative; overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.3);
         }
 
         .heart-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             transition: left 0.6s;
         }
 
-        .heart-button:hover::before {
-            left: 100%;
-        }
+        .heart-button:hover::before { left: 100%; }
+        .heart-button:hover { transform: translateY(-5px) scale(1.08); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .heart-button:active { transform: translateY(-2px) scale(1.02); }
 
         .click-indicator {
-            display: inline-block;
-            margin-left: 10px;
-            animation: bounce 1.5s ease-in-out infinite;
-            font-size: 1.3rem;
+            display: inline-block; margin-left: 8px; animation: bounce 1.5s ease-in-out infinite; font-size: 1.2rem;
         }
 
-        .heart-button:hover {
-            transform: translateY(-5px) scale(1.08);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            background: linear-gradient(45deg, #ff8fb3, #d55a7a);
+        .sparkle {
+            position: absolute; color: #fff; font-size: 12px; animation: sparkleFloat 3s ease-out forwards;
+            pointer-events: none; z-index: 10;
         }
 
-        .heart-button:active {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Story Page */
+        /* === STORY PAGE === */
         .story-container {
-            max-width: 500px;
-            width: 90%;
-            margin: 20px auto;
-            padding: 30px 25px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(196, 69, 105, 0.1);
-            animation: slideInFromBottom 1s ease-out;
-            max-height: 85vh;
-            overflow-y: auto;
-            border: 1px solid rgba(255, 107, 157, 0.2);
+            background: rgba(255,255,255,0.95); border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2), 0 5px 15px rgba(196,69,105,0.1);
+            animation: slideInFromBottom 1s ease-out; max-height: 85vh; overflow-y: auto;
+            border: 1px solid rgba(255,107,157,0.2);
         }
 
         .story-header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #ff6b9d;
+            margin-bottom: 30px; padding-bottom: 15px; border-bottom: 2px solid #ff6b9d;
         }
 
         .story-title {
-            font-size: 2.5rem;
-            color: #c44569;
-            margin-bottom: 15px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            font-size: 2.2rem; color: #c44569; margin-bottom: 10px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
         .story-subtitle {
-            font-size: 1.2rem;
-            color: #666;
-            font-style: italic;
+            font-size: 1.1rem; color: #666; font-style: italic;
         }
 
         .story-content {
-            font-size: 1.2rem;
-            line-height: 2;
-            color: #333;
-            text-align: justify;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: rgba(248, 181, 0, 0.05);
-            border-radius: 15px;
-            border-left: 5px solid #f8b500;
+            font-size: 1.15rem; line-height: 2; color: #333; text-align: justify;
+            padding: 25px; background: rgba(248,181,0,0.05); border-radius: 15px;
+            border-left: 5px solid #f8b500; margin-bottom: 30px;
         }
 
         .back-button {
-            background: linear-gradient(45deg, #c44569, #ff6b9d);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1rem;
-            border-radius: 25px;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            font-family: 'Georgia', serif;
-            display: block;
-            margin: 0 auto;
+            background: linear-gradient(45deg, #c44569, #ff6b9d); color: white; border: none;
+            padding: 14px 28px; font-size: 1rem; border-radius: 25px; cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: 0.3s; font-family: inherit;
+            display: block; margin: 0 auto;
         }
 
         .back-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px); box-shadow: 0 12px 25px rgba(0,0,0,0.3);
         }
 
-        /* Floating Elements */
+        /* === FLOATING ELEMENTS === */
         .birthday-element {
-            position: fixed;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 25px;
-            animation: floatBirthdayElement 12s linear infinite;
-            pointer-events: none;
-            z-index: 1;
+            position: fixed; color: rgba(255,255,255,0.9); font-size: 25px;
+            animation: floatBirthdayElement 12s linear infinite; pointer-events: none; z-index: 1;
         }
-
         .birthday-element.bounce { animation: bounceBirthdayElement 8s ease-in-out infinite; }
         .birthday-element.spiral { animation: spiralBirthdayElement 15s ease-in-out infinite; }
 
-        /* Footer */
+        /* === CARD FOOTER === */
         .card-footer {
-            margin-top: 25px;
-            padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            color: white;
-            font-size: 0.9rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: footerGlow 3s ease-in-out infinite;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            margin-top: 20px; padding: 10px 16px; background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px); border-radius: 20px; color: white; font-size: 0.85rem;
+            font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.3); animation: footerGlow 3s ease-in-out infinite;
+            text-align: center; position: relative; overflow: hidden;
         }
 
         .card-footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
             animation: footerShimmer 4s ease-in-out infinite;
         }
-
-        .developer-footer { display: none; }
     </style>
 </head>
 <body>
@@ -561,33 +289,33 @@
     <!-- Welcome Page -->
     <div id="welcomePage" class="page active">
         <div class="welcome-container">
-            <h1 class="welcome-title">✨ Something Magical is Coming ✨</h1>
+            <h1 class="welcome-title">Something Magical is Coming</h1>
             <p class="welcome-message">
-                When the stars align for our beloved Jannat 🌙<br>
-                A special surprise awaits... 💕
+                When the stars align for our beloved Jannat<br>
+                A special surprise awaits... 
             </p>
             <div class="loading-dots">
                 <span></span><span></span><span></span>
             </div>
-            <p style="color: white; font-size: 1.1rem; text-shadow: 2px 2px 6px rgba(0,0,0,0.8); margin-top: 25px; line-height: 1.6; font-weight: 400;">
-                Prepare your heart for pure magic! ✨
+            <p style="color: white; font-size: 1rem; margin-top: 20px;">
+                Prepare your heart for pure magic! 
             </p>
         </div>
     </div>
 
-    <!-- Birthday Wish Page -->
+    <!-- Birthday Page -->
     <div id="birthdayPage" class="page">
         <div class="birthday-container" onclick="createSparkles(event)">
-            <h1 class="birthday-title">Happy Birthday, Pookie girl Jannat! 💕</h1>
+            <h1 class="birthday-title">Happy Birthday, Pookie girl Jannat!</h1>
             <div class="birthday-message">
-                May Allah make every step of your life full of joy, blessings, and light. Stay kind and keep smiling — and may we all meet again in Jannah one day, insha'Allah. 🌙
+                May Allah make every step of your life full of joy, blessings, and light. Stay kind and keep smiling — and may we all meet again in Jannah one day, insha'Allah.
             </div>
             <button class="heart-button" onclick="showStoryPage(); event.stopPropagation();">
-                হৃদয়ের গভীরতা থেকে কিছু কথা এসে জমেছে কাগজে, সময় হলে পড়ে দেখবেন ম্যাডাম 🌷
-                <span class="click-indicator">👆 Click Here</span>
+                হৃদয়ের গভীরতা থেকে কিছু কথা এসে জমেছে কাগজে, সময় হলে পড়ে দেখবেন ম্যাডাম
+                <span class="click-indicator">Click Here</span>
             </button>
             <div class="card-footer">
-                ✨ Crafted with 💖 by Your Pookie Vaiya 🚀👨‍💻 ✨
+                Crafted with love by Your Pookie Vaiya
             </div>
         </div>
     </div>
@@ -602,9 +330,8 @@
             <div class="story-content">
                 <p>এখানে আপনার হৃদয়ের গভীর থেকে আসা কথাগুলো লিখুন...</p>
                 <p>জান্নাতের জন্য আপনার বিশেষ অনুভূতি, স্মৃতি, এবং শুভেচ্ছাগুলো এই জায়গায় সুন্দরভাবে সাজিয়ে লিখতে পারেন।</p>
-                <p>এই টেমপ্লেটটি আপনার নিজের কথা দিয়ে পূর্ণ করুন এবং জান্নাতকে একটি অবিস্মরণীয় উপহার দিন।</p>
-                <p style="text-align: center; font-style: italic; color: #c44569; margin-top: 30px;">
-                    "সবচেয়ে সুন্দর উপহার হলো হৃদয় থেকে আসা কথা" 💝
+                <p style="text-align: center; font-style: italic; color: #c44569; margin-top: 25px;">
+                    "সবচেয়ে সুন্দর উপহার হলো হৃদয় থেকে আসা কথা" 
                 </p>
             </div>
             <button class="back-button" onclick="showBirthdayPage()">
@@ -627,55 +354,49 @@
         }
 
         function createSparkles(event) {
-            const sparkleEmojis = ['✨', '⭐', '💫', '🌟', '💖', '💕'];
+            const emojis = ['sparkle', 'star', 'dizzy', 'glowing_star', 'heart', 'two_hearts'];
             const container = event.currentTarget;
             for (let i = 0; i < 6; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
                 const rect = container.getBoundingClientRect();
                 const x = event.clientX - rect.left + (Math.random() - 0.5) * 100;
                 const y = event.clientY - rect.top + (Math.random() - 0.5) * 50;
-                sparkle.style.left = x + 'px';
-                sparkle.style.top = y + 'px';
-                container.appendChild(sparkle);
-                setTimeout(() => { if (sparkle.parentNode) sparkle.parentNode.removeChild(sparkle); }, 3000);
+                s.style.left = x + 'px'; s.style.top = y + 'px';
+                container.appendChild(s);
+                setTimeout(() => s.remove(), 3000);
             }
         }
 
         function createBirthdayAnimation() {
-            const birthdayElements = ['🎂', '🎉', '🎊', '🎈', '🎁', '🌟', '✨', '💖', '💕', '🎀', '🌹', '🦋', '🌈', '💫', '⭐', '🎵', '🎶', '🍰', '🧁', '🎭'];
-            const animationTypes = ['', 'bounce', 'spiral'];
+            const items = ['cake', 'party_popper', 'confetti_ball', 'balloon', 'gift', 'star', 'sparkles', 'heart', 'two_hearts', 'ribbon', 'rose', 'butterfly', 'rainbow', 'dizzy', 'star2', 'musical_note', 'musical_notes', 'cupcake', 'lollipop', 'mask'];
+            const types = ['', 'bounce', 'spiral'];
             setInterval(() => {
-                const element = document.createElement('div');
-                element.className = 'birthday-element ' + animationTypes[Math.floor(Math.random() * animationTypes.length)];
-                element.textContent = birthdayElements[Math.floor(Math.random() * birthdayElements.length)];
-                element.style.left = Math.random() * 100 + 'vw';
-                element.style.animationDuration = (Math.random() * 5 + 8) + 's';
-                element.style.fontSize = (Math.random() * 15 + 20) + 'px';
-                element.style.animationDelay = Math.random() * 2 + 's';
-                document.body.appendChild(element);
-                setTimeout(() => { if (element.parentNode) element.parentNode.removeChild(element); }, 15000);
+                const el = document.createElement('div');
+                el.className = 'birthday-element ' + types[Math.floor(Math.random() * types.length)];
+                el.textContent = items[Math.floor(Math.random() * items.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                el.style.fontSize = (Math.random() * 15 + 20) + 'px';
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 15000);
             }, 400);
         }
 
-        setTimeout(() => {
-            showBirthdayPage();
-            createBirthdayAnimation();
-        }, 4000);
-
+        setTimeout(() => { showBirthdayPage(); createBirthdayAnimation(); }, 4000);
         createBirthdayAnimation();
 
         setInterval(() => {
             if (document.getElementById('welcomePage').classList.contains('active')) {
-                const element = document.createElement('div');
-                element.className = 'birthday-element';
-                element.textContent = ['✨', '💕', '🌟', '💖'][Math.floor(Math.random() * 4)];
-                element.style.left = Math.random() * 100 + 'vw';
-                element.style.animationDuration = '8s';
-                element.style.fontSize = '18px';
-                document.body.appendChild(element);
-                setTimeout(() => { if (element.parentNode) element.parentNode.removeChild(element); }, 12000);
+                const el = document.createElement('div');
+                el.className = 'birthday-element';
+                el.textContent = ['sparkles', 'two_hearts', 'glowing_star', 'heart'][Math.floor(Math.random() * 4)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = '8s';
+                el.style.fontSize = '18px';
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 12000);
             }
         }, 3000);
     </script>
