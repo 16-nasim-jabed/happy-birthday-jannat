@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Jannat! 💕</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(-45deg, #ff6b9d, #c44569, #f8b500, #ff9ff3);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .page {
+            display: none;
+            min-height: 100%;
+            position: relative;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-height: 100vh;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Welcome Page */
+        .welcome-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25), 0 5px 15px rgba(255, 107, 157, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            animation: welcomeFloat 3s ease-in-out infinite, welcomeFadeOut 1.5s ease-in-out 2.5s forwards;
+            max-width: 420px;
+            width: 90%;
+            margin: 10px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+
+        @keyframes welcomeFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.02); }
+        }
+
+        @keyframes welcomeFadeOut {
+            0% { 
+                opacity: 1; 
+                transform: scale(1) translateY(0); 
+                filter: blur(0px);
+            }
+            100% { 
+                opacity: 0; 
+                transform: scale(0.95) translateY(-20px); 
+                filter: blur(2px);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: scale(1); }
+            80% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.8); }
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(0, 0, 0, 0.9);
+            animation: pulse 2s ease-in-out infinite;
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .welcome-message {
+            font-size: 1.4rem;
+            color: white;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.8), 1px 1px 2px rgba(0,0,0,0.9);
+            margin-bottom: 25px;
+            font-style: italic;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .loading-dots {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .loading-dots span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: white;
+            margin: 0 3px;
+            animation: loadingDots 1.4s ease-in-out infinite both;
+        }
+
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes loadingDots {
+            0%, 80%, 100% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Birthday Page */
+        .birthday-container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            /* CHANGE IMAGE HERE: Replace the URL below with your image URL */
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.7), rgba(255, 160, 180, 0.6)), 
+                        url('/happy_birthday_medam/download.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 35px 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(255, 182, 193, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            max-width: 480px;
+            width: 90%;
+            margin: 10px auto;
+            animation: birthdayEntrance 2s ease-out;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .birthday-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .birthday-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .sparkle {
+            position: absolute;
+            color: #fff;
+            font-size: 12px;
+            animation: sparkleFloat 3s ease-out forwards;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-30px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-60px) scale(0);
+            }
+        }
+
+        @keyframes birthdayEntrance {
+            0% { opacity: 0; transform: scale(0.5) rotate(10deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        .birthday-title {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+            animation: rainbow 3s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { color: #ff6b9d; }
+            25% { color: #f8b500; }
+            50% { color: #ff9ff3; }
+            75% { color: #c44569; }
+            100% { color: #ff6b9d; }
+        }
+
+        .birthday-message {
+            font-size: 1.3rem;
+            color: white;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 2s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .heart-button {
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            font-family: 'Georgia', serif;
+            animation: heartbeat 2s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .heart-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .heart-button:hover::before {
+            left: 100%;
+        }
+
+        .click-indicator {
+            display: inline-block;
+            margin-left: 10px;
+            animation: bounce 1.5s ease-in-out infinite;
+            font-size: 1.3rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .heart-button:hover {
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(45deg, #ff8fb3, #d55a7a);
+        }
+
+        .heart-button:active {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Story Page */
+        .story-container {
+            max-width: 500px;
+            width: 90%;
+            margin: 20px auto;
+            padding: 30px 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(196, 69, 105, 0.1);
+            animation: slideInFromBottom 1s ease-out;
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 107, 157, 0.2);
+        }
+
+        @keyframes slideInFromBottom {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .story-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ff6b9d;
+        }
+
+        .story-title {
+            font-size: 2.5rem;
+            color: #c44569;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .story-content {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #333;
+            text-align: justify;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(248, 181, 0, 0.05);
+            border-radius: 15px;
+            border-left: 5px solid #f8b500;
+        }
+
+        .back-button {
+            background: linear-gradient(45deg, #c44569, #ff6b9d);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-family: 'Georgia', serif;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Floating birthday elements animation */
+        .birthday-element {
+            position: fixed;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 25px;
+            animation: floatBirthdayElement 12s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes floatBirthdayElement {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(-10vh) rotate(324deg) scale(1);
+            }
+            100% {
+                transform: translateY(-20vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .birthday-element.bounce {
+            animation: bounceBirthdayElement 8s ease-in-out infinite;
+        }
+
+        @keyframes bounceBirthdayElement {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(80vh) rotate(45deg) scale(1.2);
+            }
+            50% {
+                transform: translateY(20vh) rotate(180deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(-10vh) rotate(315deg) scale(1.2);
+            }
+        }
+
+        .birthday-element.spiral {
+            animation: spiralBirthdayElement 15s ease-in-out infinite;
+        }
+
+        @keyframes spiralBirthdayElement {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.3);
+                opacity: 0;
+            }
+            25% {
+                opacity: 1;
+                transform: translateY(75vh) translateX(200px) rotate(90deg) scale(1);
+            }
+            50% {
+                transform: translateY(50vh) translateX(-200px) rotate(180deg) scale(1.3);
+            }
+            75% {
+                transform: translateY(25vh) translateX(200px) rotate(270deg) scale(1);
+            }
+            100% {
+                transform: translateY(-10vh) translateX(0) rotate(360deg) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* Card Footer */
+        .card-footer {
+            margin-top: 25px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: footerGlow 3s ease-in-out infinite;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: footerShimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes footerShimmer {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: -100%; }
+        }
+
+        @keyframes footerGlow {
+            0%, 100% { 
+                box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+                border-color: rgba(255, 255, 255, 0.3);
+            }
+            50% { 
+                box-shadow: 0 6px 25px rgba(248, 181, 0, 0.4);
+                border-color: rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        /* Original Footer (hidden) */
+        .developer-footer {
+            display: none;
+        }
+
+        @keyframes footerDance {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg);
+                box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+            }
+            25% { 
+                transform: translateY(-5px) rotate(1deg);
+                box-shadow: 0 15px 35px rgba(196, 69, 105, 0.5);
+            }
+            50% { 
+                transform: translateY(-8px) rotate(-1deg);
+                box-shadow: 0 20px 40px rgba(248, 181, 0, 0.4);
+            }
+            75% { 
+                transform: translateY(-3px) rotate(0.5deg);
+                box-shadow: 0 12px 30px rgba(255, 159, 243, 0.5);
+            }
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 1200px) {
+            .welcome-container, .birthday-container {
+                max-width: 400px;
+                padding: 35px 25px;
+            }
+            
+            .story-container {
+                max-width: 480px;
+                padding: 25px 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page.active {
+                padding: 15px;
+                min-height: 100vh;
+            }
+            
+            .welcome-title, .birthday-title {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+            
+            .welcome-message, .birthday-message {
+                font-size: 1.1rem;
+                margin-bottom: 25px;
+            }
+            
+            .welcome-container, .birthday-container {
+                max-width: 350px;
+                padding: 30px 20px;
+                width: 95%;
+            }
+            
+            .story-container {
+                max-width: 400px;
+                width: 95%;
+                padding: 25px 20px;
+                max-height: 80vh;
+            }
+            
+            .story-content {
+                font-size: 1.1rem;
+                padding: 20px;
+            }
+            
+            .developer-footer {
+                font-size: 0.85rem;
+                padding: 8px 15px;
+                margin-top: 15px;
+                max-width: calc(100vw - 30px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page.active {
+                padding: 10px;
+            }
+            
+            .welcome-title, .birthday-title {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+            
+            .welcome-message, .birthday-message {
+                font-size: 1rem;
+                line-height: 1.5;
+                margin-bottom: 20px;
+            }
+            
+            .welcome-container, .birthday-container {
+                max-width: 300px;
+                padding: 25px 15px;
+                width: 98%;
+            }
+            
+            .story-container {
+                max-width: 320px;
+                width: 98%;
+                padding: 20px 15px;
+                max-height: 75vh;
+            }
+            
+            .story-content {
+                font-size: 1rem;
+                padding: 15px;
+            }
+            
+            .heart-button {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .developer-footer {
+                font-size: 0.7rem;
+                padding: 6px 12px;
+                margin-top: 10px;
+                max-width: calc(100vw - 20px);
+            }
+        }
+
+        @media (max-width: 360px) {
+            .welcome-title, .birthday-title {
+                font-size: 1.3rem;
+                margin-bottom: 12px;
+            }
+            
+            .welcome-message, .birthday-message {
+                font-size: 0.9rem;
+                margin-bottom: 18px;
+            }
+            
+            .welcome-container, .birthday-container {
+                max-width: 280px;
+                padding: 20px 12px;
+            }
+            
+            .story-container {
+                max-width: 290px;
+                padding: 18px 12px;
+                max-height: 70vh;
+            }
+            
+            .heart-button {
+                padding: 10px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .developer-footer {
+                font-size: 0.65rem;
+                padding: 5px 8px;
+                margin-top: 8px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .page.active {
+                justify-content: flex-start;
+                padding-top: 20px;
+            }
+            
+            .welcome-container, .birthday-container {
+                margin: 5px auto;
+            }
+            
+            .story-container {
+                max-height: 70vh;
+                margin: 10px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Page -->
+    <div id="welcomePage" class="page active">
+        <div class="welcome-container">
+            <h1 class="welcome-title">✨ Something Magical is Coming ✨</h1>
+            <p class="welcome-message">
+                When the stars align for our beloved Jannat 🌙<br>
+                A special surprise awaits... 💕
+            </p>
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <p style="color: white; font-size: 1.1rem; text-shadow: 2px 2px 6px rgba(0,0,0,0.8); margin-top: 25px; line-height: 1.6; font-weight: 400;">
+                Prepare your heart for pure magic! ✨
+            </p>
+        </div>
+    </div>
+
+    <!-- Birthday Wish Page -->
+    <div id="birthdayPage" class="page">
+        <div class="birthday-container" onclick="createSparkles(event)">
+            <h1 class="birthday-title">Happy Birthday, Pookie girl Jannat! 💕</h1>
+            <div class="birthday-message">
+                May Allah make every step of your life full of joy, blessings, and light. Stay kind and keep smiling — and may we all meet again in Jannah one day, insha'Allah. 🌙
+            </div>
+            <button class="heart-button" onclick="showStoryPage(); event.stopPropagation();">
+                হৃদয়ের গভীরতা থেকে কিছু কথা এসে জমেছে কাগজে, সময় হলে পড়ে দেখবেন ম্যাডাম 🌷
+                <span class="click-indicator">👆 Click Here</span>
+            </button>
+            
+            <!-- Developer Footer inside card -->
+            <div class="card-footer">
+                ✨ Crafted with 💖 by Your Pookie Vaiya 🚀👨‍💻 ✨
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Page -->
+    <div id="storyPage" class="page">
+        <div class="story-container">
+            <div class="story-header">
+                <h1 class="story-title">হৃদয়ের কথা</h1>
+                <p class="story-subtitle">জান্নাতের জন্য বিশেষ কিছু কথা</p>
+            </div>
+            <div class="story-content">
+                <!-- You can write your Bengali story here -->
+                <p>এখানে আপনার হৃদয়ের গভীর থেকে আসা কথাগুলো লিখুন...</p>
+                
+                <p>জান্নাতের জন্য আপনার বিশেষ অনুভূতি, স্মৃতি, এবং শুভেচ্ছাগুলো এই জায়গায় সুন্দরভাবে সাজিয়ে লিখতে পারেন।</p>
+                
+                <p>এই টেমপ্লেটটি আপনার নিজের কথা দিয়ে পূর্ণ করুন এবং জান্নাতকে একটি অবিস্মরণীয় উপহার দিন।</p>
+                
+                <p style="text-align: center; font-style: italic; color: #c44569; margin-top: 30px;">
+                    "সবচেয়ে সুন্দর উপহার হলো হৃদয় থেকে আসা কথা" 💝
+                </p>
+            </div>
+            <button class="back-button" onclick="showBirthdayPage()">
+                ← ফিরে যান
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function showBirthdayPage() {
+            document.getElementById('welcomePage').classList.remove('active');
+            document.getElementById('birthdayPage').classList.add('active');
+            document.getElementById('storyPage').classList.remove('active');
+        }
+
+        function showStoryPage() {
+            document.getElementById('welcomePage').classList.remove('active');
+            document.getElementById('birthdayPage').classList.remove('active');
+            document.getElementById('storyPage').classList.add('active');
+        }
+
+        function createSparkles(event) {
+            const sparkleEmojis = ['✨', '⭐', '💫', '🌟', '💖', '💕'];
+            const container = event.currentTarget;
+            
+            for (let i = 0; i < 6; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+                
+                const rect = container.getBoundingClientRect();
+                const x = event.clientX - rect.left + (Math.random() - 0.5) * 100;
+                const y = event.clientY - rect.top + (Math.random() - 0.5) * 50;
+                
+                sparkle.style.left = x + 'px';
+                sparkle.style.top = y + 'px';
+                
+                container.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    if (sparkle.parentNode) {
+                        sparkle.parentNode.removeChild(sparkle);
+                    }
+                }, 3000);
+            }
+        }
+
+        function createBirthdayAnimation() {
+            const birthdayElements = [
+                '🎂', '🎉', '🎊', '🎈', '🎁', '🌟', '✨', '💖', '💕', '🎀', 
+                '🌹', '🦋', '🌈', '💫', '⭐', '🎵', '🎶', '🍰', '🧁', '🎭'
+            ];
+            
+            const animationTypes = ['', 'bounce', 'spiral'];
+            
+            setInterval(() => {
+                const element = document.createElement('div');
+                element.className = 'birthday-element ' + animationTypes[Math.floor(Math.random() * animationTypes.length)];
+                element.textContent = birthdayElements[Math.floor(Math.random() * birthdayElements.length)];
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                element.style.fontSize = (Math.random() * 15 + 20) + 'px';
+                element.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(element);
+
+                // Remove element after animation
+                setTimeout(() => {
+                    if (element.parentNode) {
+                        element.parentNode.removeChild(element);
+                    }
+                }, 15000);
+            }, 400);
+        }
+
+        // Automatically transition from welcome to birthday page after 4 seconds
+        setTimeout(() => {
+            showBirthdayPage();
+            createBirthdayAnimation();
+        }, 4000);
+
+        // Start birthday animation immediately for testing
+        createBirthdayAnimation();
+
+        // Create gentle floating elements during welcome page
+        setInterval(() => {
+            if (document.getElementById('welcomePage').classList.contains('active')) {
+                const element = document.createElement('div');
+                element.className = 'birthday-element';
+                element.textContent = ['✨', '💕', '🌟', '💖'][Math.floor(Math.random() * 4)];
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.animationDuration = '8s';
+                element.style.fontSize = '18px';
+                document.body.appendChild(element);
+
+                setTimeout(() => {
+                    if (element.parentNode) {
+                        element.parentNode.removeChild(element);
+                    }
+                }, 12000);
+            }
+        }, 3000);
+    </script>
+
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99332c0783743e6f',t:'MTc2MTI0MjgyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
