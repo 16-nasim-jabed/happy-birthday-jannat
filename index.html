@@ -1,404 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy Birthday Jannat! 💕</title>
-    <style>
-        /* === GLOBAL RESET & FULL-SCREEN === */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body {
-            height: 100%;
-            width: 100%;
-            overflow-x: hidden;
-            overscroll-behavior: none;
-            font-family: 'Georgia', serif;
-            background: linear-gradient(-45deg, #ff6b9d, #c44569, #f8b500, #ff9ff3);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy Birthday Jannat!</title>
+<style>
+/* ───────────────────── GLOBAL ───────────────────── */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;width:100%;overflow:hidden;font-family:'Georgia',serif;
+    background:linear-gradient(-45deg,#ff6b9d,#c44569,#f8b500,#ff9ff3);
+    background-size:400% 400%;animation:gradientShift 8s ease infinite}
+@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+.page{display:none;min-height:100vh;width:100%;padding:2vw;align-items:center;justify-content:center;flex-direction:column}
+.page.active{display:flex}
 
-        .page {
-            display: none;
-            min-height: 100vh;
-            width: 100%;
-            padding: 15px;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
+/* ───────────────────── CARD BASE ───────────────────── */
+.card{
+    width:90%;max-width:420px;min-width:260px;margin:auto;
+    border-radius:20px;padding:5vw 4vw;text-align:center;position:relative;
+    overflow:hidden;box-shadow:0 10px 25px rgba(0,0,0,.25),0 5px 15px rgba(255,107,157,.2);
+}
 
-        .page.active {
-            display: flex;
-        }
+/* ───────────────────── WELCOME ───────────────────── */
+#welcomePage .card{background:rgba(255,255,255,.15);backdrop-filter:blur(20px);
+    border:2px solid rgba(255,255,255,.4);animation:welcomeFloat 3s ease-in-out infinite,
+    welcomeFadeOut 1.5s ease-in-out 2.5s forwards}
+.welcome-title{font-size:clamp(1.6rem,5vw,2rem);color:#fff;margin-bottom:3vw;
+    text-shadow:2px 2px 6px rgba(0,0,0,.7);animation:pulse 2s ease-in-out infinite;font-weight:bold}
+.welcome-message{font-size:clamp(.9rem,3.5vw,1.1rem);color:#fff;line-height:1.6;margin-bottom:3vw;
+    text-shadow:1px 1px 4px rgba(0,0,0,.8);font-style:italic;font-weight:600}
 
-        /* === FIXED CARD SIZE FOR ALL SCREENS === */
-        .welcome-container,
-        .birthday-container,
-        .story-container {
-            width: 100%;
-            max-width: 380px; /* Fixed size — perfect for mobile & consistent on desktop */
-            margin: 0 auto;
-            borderarcy: 25px;
-            padding: 30px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25), 0 5px 15px rgba(255, 107, 157, 0.2);
-        }
+/* ───────────────────── BIRTHDAY ───────────────────── */
+#birthdayPage .card{background:linear-gradient(135deg,rgba(255,182,193,.7),rgba(255,160,180,.6));
+    backdrop-filter:blur(15px);border:2px solid rgba(255,255,255,.6);animation:birthdayEntrance 2s ease-out}
+.birthday-title{font-size:clamp(1.8rem,6vw,2.2rem);color:#fff;margin-bottom:4vw;
+    text-shadow:2px 2px 5px rgba(0,0,0,.4);animation:rainbow 3s linear infinite}
+.birthday-message{font-size:clamp(.9rem,3.5vw,1.1rem);color:#fff;line-height:1.8;margin-bottom:4vw;
+    text-shadow:1px 1px 3px rgba(0,0,0,.3);animation:fadeInUp 2s ease-out .5s both}
 
-        /* === MOBILE ONLY: Slightly smaller text & padding === */
-        @media (max-width: 480px) {
-            .page { padding: 10px; }
-            .welcome-container,
-            .birthday-container,
-            .story-container {
-                padding: 25px 18px;
-                border-radius: 20px;
-            }
-            .welcome-title, .birthday-title { font-size: 1.6rem !important; }
-            .welcome-message, .birthday-message { font-size: 1.05rem !important; }
-            .heart-button { padding: 14px 20px !important; font-size: 0.95rem !important; }
-            .story-content { padding: 20px; font-size: 1.05rem; }
-        }
+/* ───────────────────── STORY (Bengali) ───────────────────── */
+#storyPage .card{
+    background:rgba(255,255,255,.95);max-height:82vh;overflow-y:auto;
+    -webkit-overflow-scrolling:touch;border:1px solid rgba(255,107,157,.2);
+    animation:slideInFromBottom 1s ease-out}
+.story-title{font-size:clamp(1.6rem,5vw,2rem);color:#c44569;margin-bottom:2vw}
+.story-subtitle{font-size:clamp(.85rem,3vw,1rem);color:#666;font-style:italic;margin-bottom:3vw}
+.story-content{
+    font-size:clamp(.95rem,3.8vw,1.15rem);line-height:1.85;color:#333;
+    text-align:justify;padding:4vw;background:rgba(248,181,0,.05);
+    border-radius:15px;border-left:4px solid #f8b500;
+    word-break:break-word;white-space:pre-wrap;overflow-wrap:anywhere}
 
-        @media (max-width: 360px) {
-            .welcome-title, .birthday-title { font-size: 1.4rem !important; }
-            .heart-button { padding: 12px 18px !important; font-size: 0.9rem !important; }
-        }
+/* ───────────────────── BUTTONS ───────────────────── */
+.heart-button,.back-button{
+    background:linear-gradient(45deg,#ff6b9d,#c44569);color:#fff;border:none;
+    padding:clamp(12px,3vw,14px) clamp(20px,5vw,28px);
+    font-size:clamp(.85rem,3vw,.95rem);border-radius:50px;cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,.2);transition:.4s;position:relative;overflow:hidden;
+    border:2px solid rgba(255,255,255,.3)}
+.heart-button:hover,.back-button:hover{transform:translateY(-3px) scale(1.05);
+    box-shadow:0 15px 30px rgba(0,0,0,.4)}
+.back-button{margin-top:4vw}
 
-        /* === LANDSCAPE MOBILE (short height) === */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .page { padding-top: 5vh; justify-content: flex-start; }
-            .welcome-container,
-            .birthday-container,
-            .story-container { margin: 10px auto; }
-        }
+/* ───────────────────── ANIMATIONS ───────────────────── */
+@keyframes welcomeFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-6px) scale(1.02)}}
+@keyframes welcomeFadeOut{to{opacity:0;transform:scale(.95) translateY(-10px);filter:blur(2px)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes birthdayEntrance{0%{opacity:0;transform:scale(.5) rotate(10deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes rainbow{0%{color:#ff6b9d}25%{color:#f8b500}50%{color:#ff9ff3}75%{color:#c44569}100%{color:#ff6b9d}}
+@keyframes fadeInUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes slideInFromBottom{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
 
-        /* === ANIMATIONS === */
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-        }
-
-        @keyframes welcomeFloat {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-8px) scale(1.02); }
-        }
-
-        @keyframes welcomeFadeOut {
-            0% { opacity: 1; transform: scale(1); filter: blur(0); }
-            100% { opacity: 0; transform: scale(0.95) translateY(-15px); filter: blur(2px); }
-        }
-
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-        @keyframes loadingDots { 0%, 80%, 100% { transform: scale(0); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
-        @keyframes sparkleFloat { 0% { opacity: 1; transform: translateY(0) scale(0); } 50% { opacity: 1; transform: translateY(-30px) scale(1); } 100% { opacity: 0; transform: translateY(-60px) scale(0); } }
-        @keyframes birthdayEntrance { 0% { opacity: 0; transform: scale(0.5) rotate(10deg); } 100% { opacity: 1; transform: scale(1) rotate(0); } }
-        @keyframes rainbow { 0% { color: #ff6b9d; } 25% { color: #f8b500; } 50% { color: #ff9ff3; } 75% { color: #c44569; } 100% { color: #ff6b9d; } }
-        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
-        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } 60% { transform: translateY(-4px); } }
-        @keyframes slideInFromBottom { 0% { opacity: 0;
-
- transform: translateY(50px); } 100% { opacity: 1; transform: translateY(0); } }
-
-        @keyframes floatBirthdayElement {
-            0% { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0; }
-            10% { opacity: 1; transform: translateY(90vh) rotate(36deg) scale(1); }
-            90% { opacity: 1; transform: translateY(-10vh) rotate(324deg) scale(1); }
-            100% { transform: translateY(-20vh) rotate(360deg) scale(0.5); opacity: 0; }
-        }
-
-        @keyframes bounceBirthdayElement {
-            0%, 100% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 1; transform: translateY(80vh) rotate(45deg) scale(1.2); }
-            50% { transform: translateY(20vh) rotate(180deg) scale(1); }
-            90% { opacity: 1; transform: translateY(-10vh) rotate(315deg) scale(1.2); }
-        }
-
-        @keyframes spiralBirthdayElement {
-            0% { transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.3); opacity: 0; }
-            25% { opacity: 1; transform: translateY(75vh) translateX(200px) rotate(90deg) scale(1); }
-            50% { transform: translateY(50vh) translateX(-200px) rotate(180deg) scale(1.3); }
-            75% { transform: translateY(25vh) translateX(200px) rotate(270deg) scale(1); }
-            100% { transform: translateY(-10vh) translateX(0) rotate(360deg) scale(0.3); opacity: 0; }
-        }
-
-        @keyframes footerShimmer { 0% { left: -100%; } 50% { left: 100%; } 100% { left: -100%; } }
-        @keyframes footerGlow { 0%, 100% { box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3); } 50% { box-shadow: 0 6px 25px rgba(248, 181, 0, 0.4); } }
-
-        /* === WELCOME PAGE === */
-        .welcome-container {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            animation: welcomeFloat 3s ease-in-out infinite, welcomeFadeOut 1.5s ease-in-out 2.5s forwards;
-        }
-
-        .welcome-container::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: shimmer 3s ease-in-out infinite; pointer-events: none;
-        }
-
-        .welcome-title {
-            font-size: 2.2rem; color: white; margin-bottom: 20px;
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.7); animation: pulse 2s ease-in-out infinite;
-            font-weight: bold;
-        }
-
-        .welcome-message {
-            font-size: 1.25rem; color: white; margin-bottom: 20px; line-height: 1.6;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.8); font-style: italic; font-weight: 600;
-        }
-
-        .loading-dots span {
-            display: inline-block; width: 8px; height: 8px; border-radius: 50%;
-            background: white; margin: 0 3px; animation: loadingDots 1.4s ease-in-out infinite both;
-        }
-        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
-        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
-        .loading-dots span:nth-child(3) { animation-delay: 0s; }
-
-        /* === BIRTHDAY PAGE === */
-        .birthday-container {
-            background: linear-gradient(135deg, rgba(255,182,193,0.7), rgba(255,160,180,0.6)),
-                        url('./download.jpeg') center/cover no-repeat;
-            backdrop-filter: blur(15px); border: 2px solid rgba(255,255,255,0.6);
-            animation: birthdayEntrance 2s ease-out; cursor: pointer; transition: 0.4s;
-        }
-
-        .birthday-container::before {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: shimmer 4s ease-in-out infinite; pointer-events: none;
-        }
-
-        .birthday-container:hover {
-            transform: scale(1.02); box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-        }
-
-        .birthday-title {
-            font-size: 2.4rem; color: white; margin-bottom: 25px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.4); animation: rainbow 3s linear infinite;
-        }
-
-        .birthday-message {
-            font-size: 1.15rem; color: white; line-height: 1.8; margin-bottom: 30px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.3); animation: fadeInUp 2s ease-out 0.5s both;
-        }
-
-        .heart-button {
-            background: linear-gradient(45deg, #ff6b9d, #c44569); color: white; border: none;
-            padding: 16px 32px; font-size: 1rem; border-radius: 50px; cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: 0.4s; font-family: inherit;
-            animation: heartbeat 2s ease-in-out infinite; position: relative; overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .heart-button::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.6s;
-        }
-
-        .heart-button:hover::before { left: 100%; }
-        .heart-button:hover { transform: translateY(-5px) scale(1.08); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .heart-button:active { transform: translateY(-2px) scale(1.02); }
-
-        .click-indicator {
-            display: inline-block; margin-left: 8px; animation: bounce 1.5s ease-in-out infinite; font-size: 1.2rem;
-        }
-
-        .sparkle {
-            position: absolute; color: #fff; font-size: 12px; animation: sparkleFloat 3s ease-out forwards;
-            pointer-events: none; z-index: 10;
-        }
-
-        /* === STORY PAGE === */
-        .story-container {
-            background: rgba(255,255,255,0.95); border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2), 0 5px 15px rgba(196,69,105,0.1);
-            animation: slideInFromBottom 1s ease-out; max-height: 85vh; overflow-y: auto;
-            border: 1px solid rgba(255,107,157,0.2);
-        }
-
-        .story-header {
-            margin-bottom: 30px; padding-bottom: 15px; border-bottom: 2px solid #ff6b9d;
-        }
-
-        .story-title {
-            font-size: 2.2rem; color: #c44569; margin-bottom: 10px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-
-        .story-subtitle {
-            font-size: 1.1rem; color: #666; font-style: italic;
-        }
-
-        .story-content {
-            font-size: 1.15rem; line-height: 2; color: #333; text-align: justify;
-            padding: 25px; background: rgba(248,181,0,0.05); border-radius: 15px;
-            border-left: 5px solid #f8b500; margin-bottom: 30px;
-        }
-
-        .back-button {
-            background: linear-gradient(45deg, #c44569, #ff6b9d); color: white; border: none;
-            padding: 14px 28px; font-size: 1rem; border-radius: 25px; cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: 0.3s; font-family: inherit;
-            display: block; margin: 0 auto;
-        }
-
-        .back-button:hover {
-            transform: translateY(-2px); box-shadow: 0 12px 25px rgba(0,0,0,0.3);
-        }
-
-        /* === FLOATING ELEMENTS === */
-        .birthday-element {
-            position: fixed; color: rgba(255,255,255,0.9); font-size: 25px;
-            animation: floatBirthdayElement 12s linear infinite; pointer-events: none; z-index: 1;
-        }
-        .birthday-element.bounce { animation: bounceBirthdayElement 8s ease-in-out infinite; }
-        .birthday-element.spiral { animation: spiralBirthdayElement 15s ease-in-out infinite; }
-
-        /* === CARD FOOTER === */
-        .card-footer {
-            margin-top: 20px; padding: 10px 16px; background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px); border-radius: 20px; color: white; font-size: 0.85rem;
-            font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            border: 1px solid rgba(255,255,255,0.3); animation: footerGlow 3s ease-in-out infinite;
-            text-align: center; position: relative; overflow: hidden;
-        }
-
-        .card-footer::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: footerShimmer 4s ease-in-out infinite;
-        }
-    </style>
+/* ───────────────────── MEDIA QUERIES ───────────────────── */
+@media (max-width:480px){
+    .card{padding:4vw 3vw}
+    .story-content{font-size:clamp(.9rem,3.5vw,1rem);line-height:1.8}
+}
+@media (min-width:768px){
+    .card{max-width:500px}
+}
+@media (min-width:1024px){
+    .card{max-width:600px}
+}
+</style>
 </head>
 <body>
 
-    <!-- Welcome Page -->
-    <div id="welcomePage" class="page active">
-        <div class="welcome-container">
-            <h1 class="welcome-title">Something Magical is Coming</h1>
-            <p class="welcome-message">
-                When the stars align for our beloved Jannat<br>
-                A special surprise awaits... 
-            </p>
-            <div class="loading-dots">
-                <span></span><span></span><span></span>
-            </div>
-            <p style="color: white; font-size: 1rem; margin-top: 20px;">
-                Prepare your heart for pure magic! 
-            </p>
+<!-- ==== WELCOME ==== -->
+<div id="welcomePage" class="page active">
+    <div class="card">
+        <h1 class="welcome-title">Something Magical is Coming</h1>
+        <p class="welcome-message">When the stars align for our beloved Jannat<br>A special surprise awaits...</p>
+        <div style="margin:3vw 0">
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#fff;margin:0 3px;animation:loadingDots 1.4s ease-in-out infinite both"></span>
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#fff;margin:0 3px;animation:loadingDots 1.4s ease-in-out -.32s infinite both"></span>
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#fff;margin:0 3px;animation:loadingDots 1.4s ease-in-out -.16s infinite both"></span>
+        </div>
+        <p style="color:#fff;font-size:clamp(.8rem,2.5vw,1rem)">Prepare your heart for pure magic!</p>
+    </div>
+</div>
+
+<!-- ==== BIRTHDAY ==== -->
+<div id="birthdayPage" class="page">
+    <div class="card" onclick="createSparkles(event)">
+        <h1 class="birthday-title">Happy Birthday, Pookie girl Jannat!</h1>
+        <div class="birthday-message">
+            May Allah make every step of your life full of joy, blessings, and light. Stay kind and keep smiling —
+            and may we all meet again in Jannah one day, insha'Allah.
+        </div>
+        <button class="heart-button" onclick="showStoryPage();event.stopPropagation()">
+            হৃদয়ের নীরবতা ভেঙে কিছু কথা এসে পড়েছে কাগজে,
+            সুযোগ পেলে একবার পড়বেন, ম‍্যাডাম <span style="margin-left:8px;animation:bounce 1.5s infinite">Click Here</span>
+        </button>
+        <div style="margin-top:3vw;padding:8px 12px;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);
+                    border-radius:15px;color:#fff;font-size:.85rem;font-weight:bold;border:1px solid rgba(255,255,255,.3)">
+            Crafted with love by Your Pookie Vaiya
         </div>
     </div>
+</div>
 
-    <!-- Birthday Page -->
-    <div id="birthdayPage" class="page">
-        <div class="birthday-container" onclick="createSparkles(event)">
-            <h1 class="birthday-title">Happy Birthday, Pookie girl Jannat!</h1>
-            <div class="birthday-message">
-                May Allah make every step of your life full of joy, blessings, and light. Stay kind and keep smiling — and may we all meet again in Jannah one day, insha'Allah.
-            </div>
-            <button class="heart-button" onclick="showStoryPage(); event.stopPropagation();">
-                হৃদয়ের গভীরতা থেকে কিছু কথা এসে জমেছে কাগজে, সময় হলে পড়ে দেখবেন ম্যাডাম
-                <span class="click-indicator">Click Here</span>
-            </button>
-            <div class="card-footer">
-                Crafted with love by Your Pookie Vaiya
-            </div>
+<!-- ==== STORY (Bengali) ==== -->
+<div id="storyPage" class="page">
+    <div class="card">
+        <h1 class="story-title">এক অধমের মনের কথা</h1>
+        <p class="story-subtitle">একটি দোয়া, একটি অনুভূতি — জান্নাতের জন্য</p>
+
+        <div class="story-content">
+কি অবস্থা মিস... 😊
+আসা করি ভালো আছেন 🌼
+এন্ড প্রথমেই আপনার জীবনের আরো একটি নতুন বছর এর শুভকামনা 🎉🎂💖
+
+তেমন কিছু না... শুধু তুমার সাথে দেখা হওয়ার দিন থেকে আজ পর্যন্ত যা যা হয়েছে তার কিছু কথা আছে এখানে 🥺
+সবই আপনার এই অধম সিনিয়রের আবেগ 💔
+জানি আমার আবেগ আপনার ভালো নাও লাগতে পারে... না লাগতে পারলে ভুল হবে না, ভালো না লাগাটাই স্বাভাবিক 😅
+তাও ভাবলাম শেয়ার করি 💭 আশা করি আপনার মূল্যবান সময়টুকু ব্যয় করে আমার আবেগটি একটু পড়ে দেখবেন 🙏
+
+তো ম্যাডাম, আপনার আমার দেয়া প্রথম ম্যাসেজটি মনে আছে কি? 🤔
+হয়েতা মনে নেই 😅
+যাইহোক, আপনি নোট লিখেছিলেন — “জান্নাত ঘুমায়” 😴
+তখন আমি রিপ্লাই দিই — “ওকে” 😌
+আচ্ছা, আরেকটা কথা বলি... 😄
+আমাকে প্রথম আপনিই কিন্তু রিকোয়েষ্ট দিয়েছিলেন 😅 দেন আমি হয়তো ২ দিন পর তা একে্সপট করি 😌
+এরপর থেকে আপনার স্টোরি দেখতাম, বাট কোন দিন ম্যাসেজ দেয়া হয় নাই...
+অবশ্য অচেনা কাউকে ম্যাসেজ দেয়ার মতো ছেলে আমি নই 🙈
+কিন্তু সেদিন আপনার নোটটি দেখে কেন জানি মনে হলো একটু ম্যাসেজ দেই 💬
+সেই ম্যাসেজের উত্তরে আপনি আপনার সেই মিষ্টি হাসির একটি ইমোজি দিয়েছিলেন 😊💫
+এইতো তারপর থেকে মাঝে মাঝে আপনাকে ম্যাসেজ দিতাম 💬
+আপনি মাঝে মাঝে রিপ্লে দিতেন, আবার মাঝে মাঝে দিতেন না 🙂
+এরকম করেই কেটে গেল অনেকটা সময় ⏳
+তারপর আসল কুরবানির ঈদ 🕋
+ঈদের দিন আপনি আমার কাছে সালামি চেয়েছিলেন 💸
+আমি মজা করে বলি “সালামি কি জিনিস?” 😅
+দেন আপনি আমাকে কিপ্টা বলে আখ্যায়িত করেছিলেন 😆
+যদিও ম্যাডাম, আমি কিপ্টা নই 😌 আমি গরিব, কিন্তু আমার মনটা অনেক বড় ❤️
+
+এইভাবে কয়েকটা দিন কেটে গেল 🌙
+আর আপনাকে ঐভাবেই স্টোরিগুলো দেখে মাঝে মাঝে ম্যাসেজ দিতাম, আপনি খালি মাঝে মাঝে রিয়েক্ট দিতেন ❤️‍🔥
+
+তারপর একদিন আসল বাইউষ্টের ফিমেইল ক্রিকেট টুর্নামেন্ট 🏏
+একদিন আপনি জিহাদের ছবি দেখিয়ে আমার কাছে জানতে চাইলেন — “ছেলেটা কে?” 😅
+তারপর আমি নরমালি জিজ্ঞেস করলাম, “কেন?” 🤔
+তারপর হলো কিছু কনভারসেশন 💬
+
+দেন আমি জিহাদকে মজা করে বলি — “কিরে তর দেখি মেয়েরা খুজ খবর নেয়, ভালই ত!” 😜
+পরে হয়তো জিহাদ আপনাকে ম্যাসেজ দেয় এবং সেন্টি খেয়ে বলে —
+“আপনি জানেন বড় ভাইরা আমাকে রেগ দিছে এবং কয়েকঘন্টা দারা করিয়ে রাখছে...” 🥲
+পরে আপনি আমাকে এ ব্যাপারে রিটার্ন ম্যাসেজ দেন 💬
+
+তারপর জিহাদ আমার রুমে এসে মজা করছিল 😂
+“ভাই, মেয়ে কিন্তু ভালো আছে, আপনি বললে কথা আগাব নাকি?” 😅
+আমি তেমন পাত্তা দেই নাই, মজার ছলে বলি — “না ভাই, আমি অনেক ভালো আছি লাগবে না 😌”
+
+এরপর কি একদিন দেখি আপনার আইডিতে লিখা — “This person isn’t available” 😟
+আমি ভাবলাম আপনি হয়তো আমাকে ব্লক করে দিয়েছেন 💔
+ভাবলাম, আমি ত তেমন কিছুই বলি নাই, ব্লক করল কেন? 😞
+
+তারপর কয়েকদিন পর দেখি আবার আইডি একটিভ হয়েছে 😍
+পরে কয়েকবার আপনার স্টোরিতে রিপ্লে দিতাম, বাট আপনি সিন ই করতেন না 🥺
+আমার ইগুতে লাগল 💔
+ভাবলাম — যদি ম্যাসেজ এর রিপ্লে ই না দেয় তাহলে আর ম্যাসেজ দিয়ে লাভ নাই 😔
+হয়ত আমার ম্যাসেজ এ বিরক্ত হইতেছে...
+আমি আবার কাউকে বিরক্ত করতে পছন্দ করি না 😌
+
+তারপর ২ দিন পর রাত ৮–৯টার দিকে আপনার ম্যাসেজ আসে 💬
+“ভাইয়া, আসলে আপনার ম্যাসেজ কেন জানি এতদিন আমার সামনে আসে নায়, আজকে দেখছি 😅”
+
+আমার তখনও ইগু কাজ করছিল 😅 তাই রিপ্লে দেই নাই...
+আমি তখন ডাইনিংয়ে খাবার খাচ্ছিলাম 🍽️
+তারপর কিছুক্ষণ পর আবার ম্যাসেজ আসে — “ভাইয়া, আপনি কি আমার উপর রাগ করেছেন?” 🥺💔
+
+পরে ভাবলাম, যেহেতু নিজে থেকে ম্যাসেজ দিয়েছে... একটু রিপ্লে দেই 🙂
+আমি বললাম, “না রাগ কেন করব, আমি একটু ব্যাস্ত ছিলাম পড়তেছিলাম 📚”
+আপনি বললেন — “বাহ, আপনিও পড়া লিখা করেন 😄 এইবার পরীক্ষায় টপ করবেন নিশ্চই!”
+আমি বললাম — “নাহ, টপ করা আমার কাজ না... একটু ফ্লেক্স নিতে চাইছিলাম 😎”
+
+তারপর নরমালি কনভারসেশন চলছিল 💬
+ঐ দিনের পর থেকে আপনি আমাকে একটু পাত্তা দিতেন 😌
+মাঝে মাঝে বলতেন — “ভাইয়া, কি অবস্থা?” 😄
+
+একদিন আমি জিজ্ঞেস করলাম — “কি করতেছেন?”
+তখন স্রিজন ভাইয়ার ব্যাকএন্ড প্রোগ্রাম চলছিল 💻
+আপনি একটা টাক্স করতে পারতেছিলেন না 😅
+আমি ভাবলাম — সাহায্য করি 🙂
+আমি AnyDesk নামিয়ে আপনার টাক্সটা করে দেই 🖥️
+আপনি আমাকে “Thanks” দেন 💫
+
+এরপর থেকে আপনাকে আরেকদিনও সাহায্য করি 😌
+ঐ দিনের পর থেকে আমাদের কনভারসেশন আরো বাড়ে 💬
+বিশ্বাস করবেন কিনা জানি না...
+আপনি ই ছিলেন আমার জীবনের প্রথম মেয়ে যাকে আমি তখনও পর্যন্ত দেখিও নাই, কিন্তু প্রতিদিন কনভারসেশন করতাম ❤️
+
+একদিন মন খারাপ ছিল 😞
+আপনার সাথে শেয়ার করি, আপনি আমাকে অনেক মোটিভেট করেন 🌸
+তখন থেকেই না দেখেও আপনার প্রতি এক ধরনের ভালোলাগা কাজ করছিল 💖
+
+আপনার কথা গুলো আমার হৃদয় ছুঁয়ে গিয়েছিল 🩷
+যে আপনি মানুষকে অনেক মূল্য দেন, মানুষের দুঃখ গুলো নিজের করে নেন 🤍
+
+ঐ দিন রাত ২ টা পর্যন্ত কথা হয় 😌
+এবং আপনি জিজ্ঞেস করেন — “আপনাকে কি কখনও দেখেছি?”
+আমি বলি — “না” 🙂
+
+তারপর আপনি কিছু কিউট পিক দেন 📸💖
+বললেন — “বলুন তো আমি কোনটা?” 😅
+আমি না দেখেও ঠিক চিনে ফেলি 😎
+
+বিশ্বাস করবেন কিনা জানি না, আপনার কথাগুলো যেমন আমার হৃদয় ছুঁয়েছিল 💞
+আপনার ছবি দেখে আমি আরও ক্রাশ খাই 😍
+ভাবতে থাকি — আপনি কি বাস্তবেও এত কিউট? 🥹💗
+
+এভাবে মাঝে মাঝে দেখা করার কথা বলতেন আপনি ☕
+আমি টিউশন বা ব্যস্ততার অজুহাত দিতাম 😅
+কারণ আমি লজ্জাবত ছেলে 🙈
+কখনো মেয়ে মানুষের সাথে এভাবে দেখা করিনি 😳
+
+পরে সাহস করে দেখা করি 💫
+সেদিন ছিল আমার জীবনের প্রথম মেয়ে দেখা 💖
+বেইলি রোডে আমরা প্রায় ২ ঘণ্টা দাড়িয়ে কথা বলেছিলাম ☺️
+আপনি বার বার বলছিলেন — “আমিত আপনার টিস্যু পুরাটা শেষ করে ফেলতেছি” 😆
+হঠাৎ বৃষ্টি নামে 🌧️💞
+বৃষ্টি কমলে আপনি ক্লাসে যান আর আমি ডাইনিংয়ে 🌙
+
+এরপর কনভারসেশন আরও বাড়ে 💬
+একদিন ফোন ভেঙে যায় 📱⚡
+আপনি টাকা দিতে চান, আমি নিতে চাই না 😅
+আপনি রাগ করেন 😤
+আমি সারাদিন মন খারাপ করে থাকি 🥺
+সন্ধ্যায় আপনি নিজে থেকে জিজ্ঞেস করেন — “ফোন ঠিক হয়েছে?”
+সেদিন বৃহস্পতিবার ছিল 🕋
+
+আমি বলি “হে ঠিক হয়েছে” 😌
+আপনি “ওকে” লিখেন 🙂
+আমি সরি বলতে চাচ্ছিলাম 😔
+আপনি রাগ করে বলেন কথা বলবেন না, ব্লক করবেন 😢
+আমি রিকোয়েস্ট করি রাতে কল দেন 📞
+আপনি দেন 🩵
+আমি সরি বলি, কনভেন্স করি 💗
+
+তারপর মজা করে বলেন — “তোমার ক্রাশ আছে নাকি?” 😅
+আমি সাহস করে আপনাকেই প্রপোজ করি ❤️
+সারারাত কথা চলে 💬
+আমি ত মহা খুশি 🥰
+
+কারণ আপনি ই ছিলেন আমার প্রথম ভালোবাসা 💖
+সেইদিন সারারাত না ঘুমিয়ে পরের দিন কুমিল্লায় ম্যারাথনও দিই 🏃‍♂️😂
+ডোপামিন লেভেল ছিল আকাশে 🚀
+
+এরপর আমাদের প্রেম চলতে থাকে 💞
+আপনি মাঝে মাঝে রাগ হতেন 😅
+আমি সরি বলতে বলতে আপনাকে মানাতাম 🥹
+একদিন আপনি কুইক বাইটে ট্রিট দেন 🍔🥤
+সেদিন ছিল আমার জীবনের সেরা দিন 💫
+
+আমার প্রথম ডেট ❤️‍🔥
+আপনাকে ঐদিন কিউট লাগছিল বলে বুঝাতে পারব না 😍
+
+পরে আমি অসুস্থ হয়ে পড়ি 🤒
+আপনি একদিন ক্যান্টিনে ফুল দেন 🌹 আর চিপস কিনে দেন 🍟
+ফুলটা আজও রেখে দিয়েছি 🩵
+
+এরপর একদিন শুক্রবার 🌙
+আমি লিখলাম “গুড মর্নিং জান ☀️💖”
+আপনার আম্মু দেখে ফেলেন 😬
+বিকালে বলেন — “আমার আম্মু মেসেজটা দেখছে 😭”
+তারপর বলেন — “আমাকে ভুলে যান...” 💔
+আমি মন থেকে না চাইলেও বললাম — “আচ্ছা” 😞
+
+কিছুক্ষণ পর আপনি আবার বলেন — “লাথ্থি খাবি, আমি কোথাও যাই নাই আমি আছি!” 😂💞
+এই মেসেজে আমার মধ্যে যেন প্রাণ ফিরে আসে 🥹
+
+এরপর আপনি মাঝে মাঝে বলতেন কে আপনাকে পটানোর চেষ্টা করছে 🙄
+আমি শুনে কষ্ট পেতাম 💔
+মাঝে মাঝে ভাবতাম নিজেকে শেষ করে দেই 😢
+কিন্তু আল্লাহর রহমতে থেমে যেতাম 🙏
+
+এরপর একদিন বললেন — “আমি আর রিলেশন করব না...” 🥺
+আমি বললাম — “আপনি না চাইলে জোর করতে পারি না...” 😞
+আপনি বললেন — “আমরা লয়াল থাকলেই হবে...” 💫
+
+তারপরও আপনি ধীরে ধীরে দূরে সরে গেলেন 💔
+আমি নামাজে কান্না করতাম 😢
+আল্লাহর কাছে চাইতাম স্বস্তি 💫
+
+একদিন আপনাকে ব্লক করি রাগে 😣
+তারপর আনব্লক করি 😌
+আপনি বলেন — “আমি হার্ট হয়েছি...” 💔
+
+তারপরও আমি চুপ থাকি... 😞
+
+এরপর রেজাল্টের দিন 🎓
+আপনার রেজাল্ট আমি নিজেরটার আগে দেখি 💻💖
+আপনার “Teacher’s Evaluation” আমি করে দিয়েছিলাম 😌
+
+সেদিন বিকেলে প্রায় এক মাস পর ফোনে কথা হয় ☎️
+আমার আনন্দের শেষ ছিল না ❤️
+
+এরপর থেকে মাঝে মাঝে কথাবার্তা 💬
+এখনও মাঝে মাঝে হয় 🙂
+
+আমি জানি না আপনি আমার কথাগুলো পড়বেন কিনা...
+কিন্তু এগুলো আমার মনের জমে থাকা কথা 💔
+আপনি আমার জীবনের প্রথম নারী, যার জন্য আমি মায়ের পর এত ভালোবাসা অনুভব করেছি 💞
+
+আমার মনে আজও একটা প্রশ্ন- 
+আমি কি কোন ভুল করেছিলাম নাকি আপনি আসলেই আমাকে কখনো পছন্দ করেন নাই, 
+নাকি আমি আসলেই আপনার উপযুক্ত ছিলাম না 😢 
+(আমি মানুষ আমার মনে কতকিছু ঘুরপাক খায় এগুলো নিয়ে আবার মাইন্ড কইেরন না 😅)
+
+আপনার ইগনোর করা সত্যি কষ্ট দেয় 😢
+তবুও আমি আপনাকে মন থেকে চেয়েছি 🩷
+
+আমি শুধু চাই আপনি যেন সবসময় হাসি মুখে থাকেন 😊
+আল্লাহ যেন আপনাকে সুস্থ, সুখী ও সফল রাখেন 🤲✨
+
+(আল্লাহ হাফেজ 🤍)
         </div>
+
+        <p style="text-align:center;font-style:italic;color:#c44569;margin-top:3vw">
+            "কথাগুলো ভালো না লাগলে আমি আন্তরিকভাবে দুঃখিত"
+        </p>
+
+        <button class="back-button" onclick="showBirthdayPage()">ফিরে যান</button>
     </div>
+</div>
 
-    <!-- Story Page -->
-    <div id="storyPage" class="page">
-        <div class="story-container">
-            <div class="story-header">
-                <h1 class="story-title">হৃদয়ের কথা</h1>
-                <p class="story-subtitle">জান্নাতের জন্য বিশেষ কিছু কথা</p>
-            </div>
-            <div class="story-content">
-                <p>এখানে আপনার হৃদয়ের গভীর থেকে আসা কথাগুলো লিখুন...</p>
-                <p>জান্নাতের জন্য আপনার বিশেষ অনুভূতি, স্মৃতি, এবং শুভেচ্ছাগুলো এই জায়গায় সুন্দরভাবে সাজিয়ে লিখতে পারেন।</p>
-                <p style="text-align: center; font-style: italic; color: #c44569; margin-top: 25px;">
-                    "সবচেয়ে সুন্দর উপহার হলো হৃদয় থেকে আসা কথা" 
-                </p>
-            </div>
-            <button class="back-button" onclick="showBirthdayPage()">
-                ← ফিরে যান
-            </button>
-        </div>
-    </div>
+<script>
+function showBirthdayPage(){document.getElementById('welcomePage').classList.remove('active');document.getElementById('birthdayPage').classList.add('active');document.getElementById('storyPage').classList.remove('active')}
+function showStoryPage(){document.getElementById('welcomePage').classList.remove('active');document.getElementById('birthdayPage').classList.remove('active');document.getElementById('storyPage').classList.add('active')}
 
-    <script>
-        function showBirthdayPage() {
-            document.getElementById('welcomePage').classList.remove('active');
-            document.getElementById('birthdayPage').classList.add('active');
-            document.getElementById('storyPage').classList.remove('active');
-        }
+/* Sparkles on birthday card */
+function createSparkles(e){
+    const emojis=['sparkle','star','dizzy','glowing_star','heart','two_hearts'];
+    const c=e.currentTarget;
+    for(let i=0;i<6;i++){
+        const s=document.createElement('div');
+        s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+        s.style.position='absolute';s.style.fontSize='12px';s.style.pointerEvents='none';
+        const r=c.getBoundingClientRect();
+        const x=e.clientX-r.left+(Math.random()-.5)*100;
+        const y=e.clientY-r.top+(Math.random()-.5)*50;
+        s.style.left=x+'px';s.style.top=y+'px';
+        s.style.animation='sparkleFloat 3s ease-out forwards';
+        c.appendChild(s);
+        setTimeout(()=>s.remove(),3000);
+    }
+}
 
-        function showStoryPage() {
-            document.getElementById('welcomePage').classList.remove('active');
-            document.getElementById('birthdayPage').classList.remove('active');
-            document.getElementById('storyPage').classList.add('active');
-        }
+/* Auto-switch after welcome */
+setTimeout(()=>{showBirthdayPage();},4000);
+</script>
 
-        function createSparkles(event) {
-            const emojis = ['sparkle', 'star', 'dizzy', 'glowing_star', 'heart', 'two_hearts'];
-            const container = event.currentTarget;
-            for (let i = 0; i < 6; i++) {
-                const s = document.createElement('div');
-                s.className = 'sparkle';
-                s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                const rect = container.getBoundingClientRect();
-                const x = event.clientX - rect.left + (Math.random() - 0.5) * 100;
-                const y = event.clientY - rect.top + (Math.random() - 0.5) * 50;
-                s.style.left = x + 'px'; s.style.top = y + 'px';
-                container.appendChild(s);
-                setTimeout(() => s.remove(), 3000);
-            }
-        }
-
-        function createBirthdayAnimation() {
-            const items = ['cake', 'party_popper', 'confetti_ball', 'balloon', 'gift', 'star', 'sparkles', 'heart', 'two_hearts', 'ribbon', 'rose', 'butterfly', 'rainbow', 'dizzy', 'star2', 'musical_note', 'musical_notes', 'cupcake', 'lollipop', 'mask'];
-            const types = ['', 'bounce', 'spiral'];
-            setInterval(() => {
-                const el = document.createElement('div');
-                el.className = 'birthday-element ' + types[Math.floor(Math.random() * types.length)];
-                el.textContent = items[Math.floor(Math.random() * items.length)];
-                el.style.left = Math.random() * 100 + 'vw';
-                el.style.animationDuration = (Math.random() * 5 + 8) + 's';
-                el.style.fontSize = (Math.random() * 15 + 20) + 'px';
-                document.body.appendChild(el);
-                setTimeout(() => el.remove(), 15000);
-            }, 400);
-        }
-
-        setTimeout(() => { showBirthdayPage(); createBirthdayAnimation(); }, 4000);
-        createBirthdayAnimation();
-
-        setInterval(() => {
-            if (document.getElementById('welcomePage').classList.contains('active')) {
-                const el = document.createElement('div');
-                el.className = 'birthday-element';
-                el.textContent = ['sparkles', 'two_hearts', 'glowing_star', 'heart'][Math.floor(Math.random() * 4)];
-                el.style.left = Math.random() * 100 + 'vw';
-                el.style.animationDuration = '8s';
-                el.style.fontSize = '18px';
-                document.body.appendChild(el);
-                setTimeout(() => el.remove(), 12000);
-            }
-        }, 3000);
-    </script>
+<style>
+/* loading dots animation */
+@keyframes loadingDots{0%,80%,100%{transform:scale(0);opacity:.5}40%{transform:scale(1);opacity:1}}
+@keyframes sparkleFloat{0%{opacity:1;transform:translateY(0) scale(0)}50%{opacity:1;transform:translateY(-20px) scale(1)}100%{opacity:0;transform:translateY(-40px) scale(0)}}
+@keyframes bounce{0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}60%{transform:translateY(-3px)}}
+</style>
 </body>
 </html>
