@@ -5,92 +5,1897 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Happy Birthday Jannat! 💕</title>
 <style>
-/* ───────────────────── GLOBAL ───────────────────── */
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;width:100%;overflow:hidden;font-family:'Georgia',serif;
-    background:linear-gradient(-45deg,#ff6b9d,#c44569,#f8b500,#ff9ff3);
-    background-size:400% 400%;animation:gradientShift 8s ease infinite}
-@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent
+}
 
-.page{display:none;min-height:100vh;width:100%;padding:2vw;align-items:center;justify-content:center;flex-direction:column}
-.page.active{display:flex}
+html,body{
+    height:100%;
+    width:100%;
+    overflow:hidden;
+    font-family:'Georgia',serif;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3), transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3), transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2), transparent 50%),
+        linear-gradient(-45deg, #ff6b9d, #c44569, #f8b500, #ff9ff3, #667eea, #764ba2);    
+    background-size:400% 400%, 300% 300%, 200% 200%, 600% 600%;
+    animation:
+        gradientShift 15s ease infinite,
+        backgroundPulse 12s ease-in-out infinite alternate;
+    scroll-behavior:smooth;
+    position:relative
+} 
 
-/* ───────────────────── CARD BASE ───────────────────── */
+/* Floating bubble particles */
+body::before{
+    content:'';
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-image:
+        radial-gradient(circle 4px at 20px 30px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(circle 3px at 40px 70px, rgba(255,107,157,0.4), transparent),
+        radial-gradient(circle 2px at 90px 40px, rgba(248,181,0,0.6), transparent),
+        radial-gradient(circle 3px at 130px 80px, rgba(255,159,243,0.4), transparent),
+        radial-gradient(circle 4px at 160px 30px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(circle 2px at 200px 60px, rgba(102,126,234,0.5), transparent),
+        radial-gradient(circle 3px at 250px 90px, rgba(255,107,157,0.3), transparent);
+    background-repeat:repeat;
+    background-size:300px 150px;
+    animation:bubbleFloat 25s linear infinite;
+    pointer-events:none;
+    z-index:-2
+}
+
+/* Gentle birthday text */
+body::after{
+    content:'🎉 Happy Birthday Jannat! 🎂 ✨ Special Day ✨ 🎈 Celebrate! 🎊';
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    font-size:clamp(1.2rem, 4vw, 2.5rem);
+    color:rgba(255,255,255,0.12);
+    text-shadow:0 0 15px rgba(255,255,255,0.2);
+    font-weight:bold;
+    z-index:-1;
+    animation:gentleTextFloat 20s ease-in-out infinite;
+    pointer-events:none;
+    white-space:nowrap;
+    letter-spacing:2px
+}
+
+@keyframes gradientShift{
+    0%{background-position:0% 50%, 0% 50%, 0% 50%, 0% 50%}
+    25%{background-position:25% 75%, 25% 75%, 25% 75%, 25% 75%}
+    50%{background-position:50% 100%, 50% 0%, 50% 50%, 50% 0%}
+    75%{background-position:75% 25%, 75% 25%, 75% 25%, 75% 25%}
+    100%{background-position:0% 50%, 0% 50%, 0% 50%, 0% 50%}
+}
+
+@keyframes backgroundPulse{
+    0%{filter:brightness(1) saturate(1)}
+    100%{filter:brightness(1.1) saturate(1.2)}
+}
+
+@keyframes bubbleFloat{
+    0%{transform:translateY(0) translateX(0)}
+    25%{transform:translateY(-30px) translateX(20px)}
+    50%{transform:translateY(-60px) translateX(-10px)}
+    75%{transform:translateY(-40px) translateX(30px)}
+    100%{transform:translateY(-80px) translateX(0px)}
+}
+
+@keyframes gentleTextFloat{
+    0%{
+        transform:translate(-50%, -50%) scale(0.9);
+        opacity:0.08;
+        filter:blur(2px)
+    }
+    25%{
+        transform:translate(-50%, -48%) scale(1.05);
+        opacity:0.15;
+        filter:blur(1px)
+    }
+    50%{
+        transform:translate(-50%, -50%) scale(1.1);
+        opacity:0.18;
+        filter:blur(0px)
+    }
+    75%{
+        transform:translate(-50%, -52%) scale(0.95);
+        opacity:0.12;
+        filter:blur(1px)
+    }
+    100%{
+        transform:translate(-50%, -50%) scale(0.9);
+        opacity:0.08;
+        filter:blur(2px)
+    }
+}
+
+.page{
+    display:none;
+    min-height:100vh;
+    width:100%;
+    padding:2vw;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    opacity:0;
+    transform:translateY(30px) scale(0.98);
+    transition:all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    perspective:1000px
+} 
+
+.page.active{
+    display:flex;
+    opacity:1;
+    transform:translateY(0) scale(1);
+    animation:pageEntrance 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+}
+
+@keyframes pageEntrance{
+    0%{
+        opacity:0;
+        transform:translateY(40px) scale(0.95);
+        filter:blur(5px)
+    }
+    50%{
+        opacity:0.8;
+        transform:translateY(-3px) scale(1.01);
+        filter:blur(1px)
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
 .card{
-    width:90%;max-width:420px;min-width:260px;margin:auto;
-    border-radius:20px;padding:5vw 4vw;text-align:center;position:relative;
-    overflow:hidden;box-shadow:0 10px 25px rgba(0,0,0,.25),0 5px 15px rgba(255,107,157,.2);
+    width:90%;
+    max-width:420px;
+    min-width:260px;
+    margin:auto;
+    border-radius:30px;
+    padding:5vw 4vw;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.3),
+        0 8px 25px rgba(255,107,157,.2),
+        inset 0 1px 0 rgba(255,255,255,.2);
+    transform:translateZ(0);
+    will-change:transform;
+    transition:all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.3)
 }
 
-/* ───────────────────── WELCOME ───────────────────── */
-#welcomePage .card{background:rgba(255,255,255,.15);backdrop-filter:blur(20px);
-    border:2px solid rgba(255,255,255,.4);animation:welcomeFloat 3s ease-in-out infinite,
-    welcomeFadeOut 1.5s ease-in-out 2.5s forwards}
-.welcome-title{font-size:clamp(1.6rem,5vw,2rem);color:#fff;margin-bottom:3vw;
-    text-shadow:2px 2px 6px rgba(0,0,0,.7);animation:pulse 2s ease-in-out infinite;font-weight:bold}
-.welcome-message{font-size:clamp(.9rem,3.5vw,1.1rem);color:#fff;line-height:1.6;margin-bottom:3vw;
-    text-shadow:1px 1px 4px rgba(0,0,0,.8);font-style:italic;font-weight:600}
+.card:hover{
+    transform:translateY(-8px) scale(1.03);
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.4),
+        0 15px 35px rgba(255,107,157,.4),
+        inset 0 1px 0 rgba(255,255,255,.4);
+    border:2px solid rgba(255,255,255,.5);
+    transition:all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+}
 
-/* ───────────────────── BIRTHDAY ───────────────────── */
+.card::before{
+    content:'';
+    position:absolute;
+    top:-2px;
+    left:-2px;
+    right:-2px;
+    bottom:-2px;
+    background:linear-gradient(45deg, #ff6b9d, #c44569, #f8b500, #ff9ff3, #667eea, #764ba2);
+    background-size:400% 400%;
+    border-radius:inherit;
+    z-index:-1;
+    animation:borderGlow 8s ease infinite;
+    opacity:0.6
+}
+
+.card::after{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(255,107,157,0.08) 0%, transparent 50%);
+    animation:cardShimmer 10s ease-in-out infinite;
+    pointer-events:none;
+    border-radius:inherit
+}
+
+@keyframes borderGlow{
+    0%, 100%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+}
+
+@keyframes cardShimmer{
+    0%, 100%{
+        background:
+            radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15) 0%, transparent 50%),
+            radial-gradient(circle at 70% 80%, rgba(255,107,157,0.08) 0%, transparent 50%);
+        transform:scale(1)
+    }
+    50%{
+        background:
+            radial-gradient(circle at 70% 80%, rgba(255,255,255,0.2) 0%, transparent 50%),
+            radial-gradient(circle at 30% 20%, rgba(255,107,157,0.12) 0%, transparent 50%);
+        transform:scale(1.01)
+    }
+}
+
+/* WELCOME PAGE ANIMATIONS - WITH 5 SECOND HOLD */
+#welcomePage .card{
+    background:
+        linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.15)),
+        linear-gradient(45deg, rgba(255,107,157,0.1), rgba(196,69,105,0.08));
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    animation:
+        welcomeEntrance 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        welcomeHold 5s ease-in-out 1.5s,
+        welcomeFloat 6s ease-in-out infinite 6.5s,
+        welcomePulse 4s ease-in-out infinite 7s
+}
+
+@keyframes welcomeEntrance{
+    0%{
+        opacity:0;
+        transform:scale(0.5);
+        filter:blur(10px)
+    }
+    100%{
+        opacity:1;
+        transform:scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes welcomeHold{
+    0%, 100%{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+@keyframes welcomeFloat{
+    0%, 100%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-12px) scale(1.02)}
+}
+
+@keyframes welcomePulse{
+    0%, 100%{box-shadow:0 15px 45px rgba(0,0,0,.3), 0 0 0 rgba(255,107,157,.2)}
+    50%{box-shadow:0 20px 60px rgba(0,0,0,.4), 0 0 25px rgba(255,107,157,.5)}
+}
+
+.welcome-title{
+    font-size:clamp(1.8rem,6vw,2.4rem);
+    background:linear-gradient(45deg, #fff, #ff9ff3, #fff, #f8b500);
+    background-size:300% 300%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    margin-bottom:3vw;
+    animation:
+        titleEntrance 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both,
+        titleGradient 6s ease infinite 2.5s,
+        titleFloat 6s ease-in-out infinite 3s;
+    font-weight:bold;
+    letter-spacing:3px;
+    position:relative;
+    text-shadow:0 0 20px rgba(255,255,255,0.3)
+}
+
+.welcome-title::before{
+    content:'✨';
+    position:absolute;
+    left:-50px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:2rem;
+    animation:sparkleLeft 4s ease-in-out infinite
+}
+
+.welcome-title::after{
+    content:'✨';
+    position:absolute;
+    right:-50px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:2rem;
+    animation:sparkleRight 4s ease-in-out infinite 2s
+}
+
+@keyframes titleEntrance{
+    0%{
+        opacity:0;
+        transform:translateY(-20px) scale(0.8);
+        filter:blur(8px)
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes titleGradient{
+    0%, 100%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+}
+
+@keyframes titleFloat{
+    0%, 100%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-5px) scale(1.03)}
+}
+
+@keyframes sparkleLeft{
+    0%, 100%{transform:translateY(-50%) scale(0.8)}
+    50%{transform:translateY(-60%) scale(1.3)}
+}
+
+@keyframes sparkleRight{
+    0%, 100%{transform:translateY(-50%) scale(0.8)}
+    50%{transform:translateY(-40%) scale(1.3)}
+}
+
+.welcome-message{
+    font-size:clamp(1rem,4vw,1.3rem);
+    color:#fff;
+    line-height:1.8;
+    margin-bottom:3vw;
+    text-shadow:2px 2px 8px rgba(0,0,0,.7);
+    font-style:italic;
+    font-weight:600;
+    animation:
+        messageSlide 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s both,
+        messageGlow 5s ease-in-out infinite 3s;
+    position:relative
+} 
+
+@keyframes messageSlide{
+    0%{
+        opacity:0;
+        transform:translateX(-30px);
+        filter:blur(5px)
+    }
+    100%{
+        opacity:1;
+        transform:translateX(0);
+        filter:blur(0px)
+    }
+}
+
+@keyframes messageGlow{
+    0%, 100%{text-shadow:2px 2px 8px rgba(0,0,0,.7), 0 0 8px rgba(255,255,255,0.2)}
+    50%{text-shadow:2px 2px 8px rgba(0,0,0,.7), 0 0 20px rgba(255,255,255,0.5)}
+}
+
+/* BIRTHDAY PAGE ANIMATIONS - BETTER TEXT VISIBILITY */
 #birthdayPage .card{
-   background: linear-gradient(135deg, rgba(255, 182, 193, 0.7), rgba(255, 160, 180, 0.6)), 
-                        url('./download.jpeg');
-            background-size:auto;
-            background-position: center;
-            background-repeat: no-repeat;
-            backdrop-filter: blur(25px);
-            border-radius: 25px;
-    border:2px solid rgba(255,255,255,.6);animation:birthdayEntrance 4s ease-out}
-.birthday-title{font-size:clamp(1.8rem,6vw,2.2rem);color:#7d4eff;margin-bottom:4vw;
-    text-shadow:2px 2px 5px rgba(0,0,0,.4);animation:rainbow 3s linear infinite}
-.birthday-message{font-size:clamp(.9rem,3.5vw,1.1rem);color:#8535cf;line-height:1.8;margin-bottom:4vw;
-    text-shadow:1px 1px 3px rgba(0,0,0,.3);animation:fadeInUp 2s ease-out .5s both}
+    background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9)),
+        linear-gradient(45deg, rgba(255, 182, 193, 0.2), rgba(255, 160, 180, 0.15)),
+        url('./download.jpeg');
+    background-size:cover; 
+    background-position: center;          
+    background-repeat: no-repeat;
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    animation:
+        birthdayEntrance 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        birthdayFloat 6s ease-in-out infinite 1.8s,
+        birthdayGlow 5s ease-in-out infinite 2.5s;
+    position:relative;
+    border:2px solid rgba(255,255,255,.8)
+}
 
-/* ───────────────────── STORY (Bengali) ───────────────────── */
+#birthdayPage .card::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 75% 75%, rgba(255,107,157,0.1) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(248,181,0,0.08) 0%, transparent 30%);
+    animation:gentleShimmer 12s ease-in-out infinite;
+    pointer-events:none;
+    border-radius:inherit;
+    mix-blend-mode:overlay
+}
+
+#birthdayPage .card::after{
+    content:'🎈 🎂 🎉 🎊 🎁 🌟';
+    position:absolute;
+    top:-5px;
+    right:-5px;
+    font-size:1.1rem;
+    animation:gentleEmojiFloat 8s ease-in-out infinite;
+    pointer-events:none;
+    z-index:10;
+    letter-spacing:5px
+}
+
+@keyframes birthdayEntrance{
+    0%{
+        opacity:0;
+        transform:scale(0.7);
+        filter:blur(12px)
+    }
+    100%{
+        opacity:1;
+        transform:scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes birthdayFloat{
+    0%, 100%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-8px) scale(1.02)}
+}
+
+@keyframes birthdayGlow{
+    0%, 100%{
+        box-shadow:
+            0 15px 45px rgba(0,0,0,.3),
+            0 0 0 rgba(255,107,157,.2);
+        filter:brightness(1)
+    }
+    50%{
+        box-shadow:
+            0 20px 60px rgba(0,0,0,.4),
+            0 0 30px rgba(255,107,157,.6);
+        filter:brightness(1.1)
+    }
+}
+
+@keyframes gentleShimmer{
+    0%, 100%{
+        background:
+            radial-gradient(circle at 25% 25%, rgba(255,255,255,0.15) 0%, transparent 40%),
+            radial-gradient(circle at 75% 75%, rgba(255,107,157,0.1) 0%, transparent 40%),
+            radial-gradient(circle at 50% 50%, rgba(248,181,0,0.08) 0%, transparent 30%);
+        transform:scale(1)
+    }
+    50%{
+        background:
+            radial-gradient(circle at 75% 75%, rgba(255,255,255,0.2) 0%, transparent 40%),
+            radial-gradient(circle at 25% 25%, rgba(255,107,157,0.15) 0%, transparent 40%),
+            radial-gradient(circle at 50% 50%, rgba(248,181,0,0.12) 0%, transparent 30%);
+        transform:scale(1.01)
+    }
+}
+
+@keyframes gentleEmojiFloat{
+    0%, 100%{transform:translateY(0) scale(1)}
+    25%{transform:translateY(-8px) scale(1.1)}
+    50%{transform:translateY(-4px) scale(0.95)}
+    75%{transform:translateY(-10px) scale(1.05)}
+}
+
+.birthday-title{
+    font-size:clamp(2rem,7vw,2.6rem);
+    color:#c44569;
+    text-shadow:3px 3px 8px rgba(0,0,0,.3), 0 0 15px rgba(196,69,105,0.4);
+    margin-bottom:4vw;
+    animation:
+        titleSpectacular 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both,
+        rainbowGlow 4s ease-in-out infinite 2.5s,
+        titleBounce 4s ease-in-out infinite 3s;
+    font-weight:bold;
+    position:relative;
+    z-index:1;
+    letter-spacing:2px
+}
+
+.birthday-title::before{
+    content:'🌟';
+    position:absolute;
+    left:-60px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:2.2rem;
+    animation:starGentle 6s ease-in-out infinite
+}
+
+.birthday-title::after{
+    content:'🌟';
+    position:absolute;
+    right:-60px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:2.2rem;
+    animation:starGentle 6s ease-in-out infinite 3s
+}
+
+@keyframes titleSpectacular{
+    0%{
+        opacity:0;
+        transform:translateY(-40px) scale(0.7);
+        filter:blur(15px)
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes rainbowGlow{
+    0%, 100%{
+        color:#c44569;
+        text-shadow:3px 3px 8px rgba(0,0,0,.3), 0 0 15px rgba(196,69,105,0.4)
+    }
+    25%{
+        color:#ff6b9d;
+        text-shadow:3px 3px 8px rgba(0,0,0,.3), 0 0 20px rgba(255,107,157,0.6)
+    }
+    50%{
+        color:#f8b500;
+        text-shadow:3px 3px 8px rgba(0,0,0,.3), 0 0 25px rgba(248,181,0,0.7)
+    }
+    75%{
+        color:#ff9ff3;
+        text-shadow:3px 3px 8px rgba(0,0,0,.3), 0 0 20px rgba(255,159,243,0.6)
+    }
+}
+
+@keyframes titleBounce{
+    0%, 100%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-6px) scale(1.05)}
+}
+
+@keyframes starGentle{
+    0%, 100%{
+        transform:translateY(-50%) scale(0.9);
+        filter:drop-shadow(0 0 8px gold)
+    }
+    50%{
+        transform:translateY(-60%) scale(1.2);
+        filter:drop-shadow(0 0 15px gold)
+    }
+}
+
+.birthday-message{
+    font-size:clamp(1rem,4vw,1.3rem);
+    color:#8535cf;
+    line-height:1.8;
+    margin-bottom:4vw;
+    text-shadow:2px 2px 6px rgba(0,0,0,.2), 0 0 10px rgba(133,53,207,0.3);
+    animation:
+        messageSpectacular 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s both,
+        messageFloat 6s ease-in-out infinite 2.5s;
+    position:relative;
+    z-index:1;
+    font-weight:600
+}
+
+@keyframes messageSpectacular{
+    0%{
+        opacity:0;
+        transform:translateY(30px) scale(0.8);
+        filter:blur(10px)
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes messageFloat{
+    0%, 100%{
+        transform:translateY(0) scale(1);
+        text-shadow:2px 2px 6px rgba(0,0,0,.2), 0 0 10px rgba(133,53,207,0.3)
+    }
+    50%{
+        transform:translateY(-3px) scale(1.02);
+        text-shadow:2px 2px 6px rgba(0,0,0,.2), 0 0 18px rgba(133,53,207,0.6)
+    }
+}
+
+/* STORY PAGE ANIMATIONS */
 #storyPage .card{
-    background:rgba(255,255,255,.95);max-height:82vh;overflow-y:auto;
-    -webkit-overflow-scrolling:touch;border:1px solid rgba(255,107,157,.2);
-    animation:slideInFromBottom 1s ease-out}
-.story-title{font-size:clamp(1.6rem,5vw,2rem);color:#c44569;margin-bottom:2vw}
-.story-subtitle{font-size:clamp(.85rem,3vw,1rem);color:#666;font-style:italic;margin-bottom:3vw}
+    background:
+        linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95)),
+        linear-gradient(45deg, rgba(255,107,157,0.03), rgba(248,181,0,0.03));
+    max-height:82vh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    border:2px solid rgba(255,107,157,.3);
+    animation:
+        storyReveal 2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        storyGlow 8s ease-in-out infinite 2s;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(255,107,157,.6) rgba(255,107,157,.1);
+    position:relative
+}
+
+#storyPage .card::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:6px;
+    background:linear-gradient(90deg, #ff6b9d, #c44569, #f8b500, #ff9ff3, #667eea);
+    background-size:200% 100%;
+    animation:progressFlow 3s ease-out, progressPulse 4s ease-in-out infinite 3s;
+    border-radius:30px 30px 0 0;
+    z-index:1
+}
+
+@keyframes storyReveal{
+    0%{
+        opacity:0;
+        transform:translateY(50px) scale(0.95);
+        filter:blur(10px)
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes storyGlow{
+    0%, 100%{
+        box-shadow:0 15px 45px rgba(0,0,0,.3), 0 0 0 rgba(255,107,157,.2);
+        border-color:rgba(255,107,157,.3)
+    }
+    50%{
+        box-shadow:0 20px 60px rgba(0,0,0,.4), 0 0 25px rgba(255,107,157,.5);
+        border-color:rgba(255,107,157,.6)
+    }
+}
+
+@keyframes progressFlow{
+    0%{width:0%; background-position:0% 50%}
+    100%{width:100%; background-position:100% 50%}
+}
+
+@keyframes progressPulse{
+    0%, 100%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+}
+
+#storyPage .card::-webkit-scrollbar{
+    width:8px
+}
+
+#storyPage .card::-webkit-scrollbar-track{
+    background:linear-gradient(180deg, rgba(255,107,157,.08), rgba(248,181,0,.08));
+    border-radius:4px
+}
+
+#storyPage .card::-webkit-scrollbar-thumb{
+    background:linear-gradient(180deg, #ff6b9d, #c44569, #f8b500);
+    border-radius:4px;
+    transition:all 0.3s ease
+}
+
+#storyPage .card::-webkit-scrollbar-thumb:hover{
+    background:linear-gradient(180deg, #c44569, #ff6b9d, #667eea);
+    transform:scale(1.1)
+}
+
+.story-title{
+    font-size:clamp(1.8rem,6vw,2.4rem);
+    background:linear-gradient(45deg, #c44569, #ff6b9d, #f8b500);
+    background-size:200% 200%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    margin-bottom:2vw;
+    animation:
+        titleWave 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both,
+        titleShimmer 6s ease-in-out infinite 2s;
+    font-weight:bold;
+    position:relative
+}
+
+.story-title::after{
+    content:'';
+    position:absolute;
+    bottom:-6px;
+    left:0;
+    width:0;
+    height:3px;
+    background:linear-gradient(90deg, #ff6b9d, #c44569, #f8b500);
+    border-radius:2px;
+    animation:underlineGrow 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s forwards
+}
+
+@keyframes titleWave{
+    0%{
+        opacity:0;
+        transform:translateX(-50px) scale(0.9);
+        filter:blur(8px)
+    }
+    100%{
+        opacity:1;
+        transform:translateX(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes titleShimmer{
+    0%, 100%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+}
+
+@keyframes underlineGrow{
+    0%{width:0; opacity:0}
+    100%{width:100%; opacity:1}
+}
+
+.story-subtitle{
+    font-size:clamp(1rem,3.5vw,1.2rem);
+    color:#666;
+    font-style:italic;
+    margin-bottom:3vw;
+    animation:
+        subtitleFloat 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both,
+        subtitleGlow 6s ease-in-out infinite 2.5s
+}
+
+@keyframes subtitleFloat{
+    0%{
+        opacity:0;
+        transform:translateX(50px) scale(0.9);
+        filter:blur(6px)
+    }
+    100%{
+        opacity:1;
+        transform:translateX(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes subtitleGlow{
+    0%, 100%{color:#666; text-shadow:none}
+    50%{color:#888; text-shadow:0 0 8px rgba(102,102,102,0.4)}
+}
+
 .story-content{
-    font-size:clamp(.95rem,3.8vw,1.15rem);line-height:1.85;color:#333;
-    text-align:justify;padding:4vw;background:rgba(248,181,0,.05);
-    border-radius:15px;border-left:4px solid #f8b500;
-    word-break:break-word;white-space:pre-wrap;overflow-wrap:anywhere}
-
-/* ───────────────────── BUTTONS ───────────────────── */
-.heart-button,.back-button{
-    background:linear-gradient(45deg,#ff6b9d,#c44569);color:#fff;border:none;
-    padding:clamp(12px,3vw,14px) clamp(20px,5vw,28px);
-    font-size:clamp(.85rem,3vw,.95rem);border-radius:50px;cursor:pointer;
-    box-shadow:0 8px 20px rgba(0,0,0,.2);transition:.4s;position:relative;overflow:hidden;
-    border:2px solid rgba(255,255,255,.3)}
-.heart-button:hover,.back-button:hover{transform:translateY(-3px) scale(1.05);
-    box-shadow:0 15px 30px rgba(0,0,0,.4)}
-.back-button{margin-top:4vw}
-
-/* ───────────────────── ANIMATIONS ───────────────────── */
-@keyframes welcomeFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-6px) scale(1.02)}}
-@keyframes welcomeFadeOut{to{opacity:0;transform:scale(.95) translateY(-10px);filter:blur(2px)}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-@keyframes birthdayEntrance{0%{opacity:0;transform:scale(.5) rotate(10deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
-@keyframes rainbow{0%{color:#ff6b9d}25%{color:#f8b500}50%{color:#ff9ff3}75%{color:#c44569}100%{color:#ff6b9d}}
-@keyframes fadeInUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
-@keyframes slideInFromBottom{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
-
-/* ───────────────────── MEDIA QUERIES ───────────────────── */
-@media (max-width:480px){
-    .card{padding:4vw 3vw}
-    .story-content{font-size:clamp(.9rem,3.5vw,1rem);line-height:1.8}
+    font-size:clamp(1rem,4vw,1.2rem);
+    line-height:1.9;
+    color:#333;
+    text-align:justify;
+    padding:4vw;
+    background:
+        linear-gradient(135deg, rgba(248,181,0,.06), rgba(255,107,157,.04)),
+        linear-gradient(45deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+    border-radius:25px;
+    border-left:5px solid transparent;
+    border-image:linear-gradient(180deg, #f8b500, #ff6b9d) 1;
+    animation:
+        contentReveal 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s both,
+        contentFloat 6s ease-in-out infinite 3s;
+    transition:all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position:relative;
+    overflow:hidden
 }
-@media (min-width:768px){
-    .card{max-width:500px}
+
+.story-content::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(90deg, transparent, rgba(248,181,0,0.2), rgba(255,107,157,0.15), transparent);
+    animation:contentShine 6s ease-in-out 3.5s infinite;
+    pointer-events:none
 }
-@media (min-width:1024px){
-    .card{max-width:600px}
+
+.story-content:hover{
+    background:
+        linear-gradient(135deg, rgba(248,181,0,.1), rgba(255,107,157,.08)),
+        linear-gradient(45deg, rgba(255,255,255,0.95), rgba(255,255,255,0.98));
+    transform:translateY(-3px) scale(1.01);
+    box-shadow:0 10px 30px rgba(248,181,0,.3);
+    border-left-width:8px;
+    transition:all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+}
+
+@keyframes contentReveal{
+    0%{
+        opacity:0;
+        transform:scale(0.95) translateY(20px);
+        filter:blur(8px)
+    }
+    100%{
+        opacity:1;
+        transform:scale(1) translateY(0);
+        filter:blur(0px)
+    }
+}
+
+@keyframes contentFloat{
+    0%, 100%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-2px) scale(1.005)}
+}
+
+@keyframes contentShine{
+    0%{left:-100%; opacity:0}
+    50%{left:50%; opacity:1}
+    100%{left:100%; opacity:0}
+}
+
+/* Enhanced responsive design */
+@media (max-width: 480px){
+    .page{padding:1vw}
+    .card{
+        width:95%;
+        padding:6vw 5vw;
+        border-radius:25px
+    }
+    #storyPage .card{max-height:85vh}
+    
+    body::after{
+        font-size:clamp(1rem, 4vw, 1.8rem);
+        animation-duration:25s
+    }
+    
+    .birthday-title::before,
+    .birthday-title::after{
+        font-size:1.5rem;
+        left:-30px;
+        right:-30px
+    }
+    
+    .welcome-title::before,
+    .welcome-title::after{
+        font-size:1.5rem;
+        left:-30px;
+        right:-30px
+    }
+}
+
+@media (min-width: 768px){
+    .card{
+        max-width:500px;
+        padding:3vw 4vw
+    }
+}
+
+@media (min-width: 1024px){
+    .card{
+        max-width:600px;
+        padding:2vw 3vw
+    }
+}
+
+/* Smooth focus states for accessibility */
+.card:focus-visible{
+    outline:3px solid rgba(255,107,157,.7);
+    outline-offset:4px;
+    animation:focusPulse 2s ease-in-out infinite
+}
+
+@keyframes focusPulse{
+    0%, 100%{outline-color:rgba(255,107,157,.7)}
+    50%{outline-color:rgba(255,107,157,1)}
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce){
+    *{
+        animation-duration:0.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:0.01ms !important
+    }
+    
+    body::before,
+    body::after{
+        animation:none;
+        opacity:0.2
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high){
+    .card{
+        border:3px solid #000;
+        background:rgba(255,255,255,.98) !important
+    }
+    .welcome-title, .birthday-title, .story-title{
+        -webkit-text-fill-color:initial !important;
+        color:#000 !important;
+        text-shadow:none !important
+    }
+    .welcome-message, .birthday-message{
+        color:#000 !important;
+        text-shadow:none !important
+    }
+}
+
+Perfect! Now the welcome page will hold for exactly 5 seconds before transitioning, the birthday card text is much more visible with better contrast, and all transitions are faster and smoother. The birthday title now uses solid colors with glowing effects instead of gradients for better readability!
+
+the background image isnot visible and all the text like crafted with love by your pokie vaiya and others text also not visible its like overlaped with a white background fix it 
+
+I'll fix the birthday card background visibility and text contrast issues for you!
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent
+}
+
+html,body{
+    height:100%;
+    width:100%;
+    overflow:hidden;
+    font-family:'Georgia',serif;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3), transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3), transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2), transparent 50%),
+        linear-gradient(-45deg, #ff6b9d, #c44569, #f8b500, #ff9ff3, #667eea, #764ba2);    
+    background-size:400% 400%, 300% 300%, 200% 200%, 600% 600%;
+    animation:
+        gradientShift 15s ease infinite,
+        backgroundPulse 12s ease-in-out infinite alternate;
+    scroll-behavior:smooth;
+    position:relative
+} 
+
+/* Floating bubble particles */
+body::before{
+    content:'';
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-image:
+        radial-gradient(circle 4px at 20px 30px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(circle 3px at 40px 70px, rgba(255,107,157,0.4), transparent),
+        radial-gradient(circle 2px at 90px 40px, rgba(248,181,0,0.6), transparent),
+        radial-gradient(circle 3px at 130px 80px, rgba(255,159,243,0.4), transparent),
+        radial-gradient(circle 4px at 160px 30px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(circle 2px at 200px 60px, rgba(102,126,234,0.5), transparent),
+        radial-gradient(circle 3px at 250px 90px, rgba(255,107,157,0.3), transparent);
+    background-repeat:repeat;
+    background-size:300px 150px;
+    animation:bubbleFloat 25s linear infinite;
+    pointer-events:none;
+    z-index:-2
+}
+
+/* Gentle birthday text */
+body::after{
+    content:'🎉 Happy Birthday Jannat! 🎂 ✨ Special Day ✨ 🎈 Celebrate! 🎊';
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    font-size:clamp(1.2rem, 4vw, 2.5rem);
+    color:rgba(255,255,255,0.12);
+    text-shadow:0 0 15px rgba(255,255,255,0.2);
+    font-weight:bold;
+    z-index:-1;
+    animation:gentleTextFloat 20s ease-in-out infinite;
+    pointer-events:none;
+    white-space:nowrap;
+    letter-spacing:2px
+}
+
+@keyframes gradientShift{
+    0%{background-position:0% 50%, 0% 50%, 0% 50%, 0% 50%}
+    25%{background-position:25% 75%, 25% 75%, 25% 75%, 25% 75%}
+    50%{background-position:50% 100%, 50% 0%, 50% 50%, 50% 0%}
+    75%{background-position:75% 25%, 75% 25%, 75% 25%, 75% 25%}
+    100%{background-position:0% 50%, 0% 50%, 0% 50%, 0% 50%}
+}
+
+@keyframes backgroundPulse{
+    0%{filter:brightness(1) saturate(1)}
+    100%{filter:brightness(1.1) saturate(1.2)}
+}
+
+@keyframes bubbleFloat{
+    0%{transform:translateY(0) translateX(0)}
+    25%{transform:translateY(-30px) translateX(20px)}
+    50%{transform:translateY(-60px) translateX(-10px)}
+    75%{transform:translateY(-40px) translateX(30px)}
+    100%{transform:translateY(-80px) translateX(0px)}
+}
+
+@keyframes gentleTextFloat{
+    0%{
+        transform:translate(-50%, -50%) scale(0.9);
+        opacity:0.08;
+        filter:blur(2px)
+    }
+    25%{
+        transform:translate(-50%, -48%) scale(1.05);
+        opacity:0.15;
+        filter:blur(1px)
+    }
+    50%{
+        transform:translate(-50%, -50%) scale(1.1);
+        opacity:0.18;
+        filter:blur(0px)
+    }
+    75%{
+        transform:translate(-50%, -52%) scale(0.95);
+        opacity:0.12;
+        filter:blur(1px)
+    }
+    100%{
+        transform:translate(-50%, -50%) scale(0.9);
+        opacity:0.08;
+        filter:blur(2px)
+    }
+}
+
+.page{
+    display:none;
+    min-height:100vh;
+    width:100%;
+    padding:2vw;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    opacity:0;
+    transform:translateY(30px) scale(0.98);
+    transition:all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    perspective:1000px
+} 
+
+.page.active{
+    display:flex;
+    opacity:1;
+    transform:translateY(0) scale(1);
+    animation:pageEntrance 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+}
+
+@keyframes pageEntrance{
+    0%{
+        opacity:0;
+        transform:translateY(40px) scale(0.95);
+        filter:blur(5px)
+    }
+    50%{
+        opacity:0.8;
+        transform:translateY(-3px) scale(1.01);
+        filter:blur(1px)
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+.card{
+    width:90%;
+    max-width:420px;
+    min-width:260px;
+    margin:auto;
+    border-radius:30px;
+    padding:5vw 4vw;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.3),
+        0 8px 25px rgba(255,107,157,.2),
+        inset 0 1px 0 rgba(255,255,255,.2);
+    transform:translateZ(0);
+    will-change:transform;
+    transition:all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.3)
+}
+
+.card:hover{
+    transform:translateY(-8px) scale(1.03);
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.4),
+        0 15px 35px rgba(255,107,157,.4),
+        inset 0 1px 0 rgba(255,255,255,.4);
+    border:2px solid rgba(255,255,255,.5);
+    transition:all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+}
+
+.card::before{
+    content:'';
+    position:absolute;
+    top:-2px;
+    left:-2px;
+    right:-2px;
+    bottom:-2px;
+    background:linear-gradient(45deg, #ff6b9d, #c44569, #f8b500, #ff9ff3, #667eea, #764ba2);
+    background-size:400% 400%;
+    border-radius:inherit;
+    z-index:-1;
+    animation:borderGlow 8s ease infinite;
+    opacity:0.6
+}
+
+.card::after{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(255,107,157,0.08) 0%, transparent 50%);
+    animation:cardShimmer 10s ease-in-out infinite;
+    pointer-events:none;
+    border-radius:inherit
+}
+
+@keyframes borderGlow{
+    0%, 100%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+}
+
+@keyframes cardShimmer{
+    0%, 100%{
+        background:
+            radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15) 0%, transparent 50%),
+            radial-gradient(circle at 70% 80%, rgba(255,107,157,0.08) 0%, transparent 50%);
+        transform:scale(1)
+    }
+    50%{
+        background:
+            radial-gradient(circle at 70% 80%, rgba(255,255,255,0.2) 0%, transparent 50%),
+            radial-gradient(circle at 30% 20%, rgba(255,107,157,0.12) 0%, transparent 50%);
+        transform:scale(1.01)
+    }
+}
+
+/* WELCOME PAGE ANIMATIONS - WITH 5 SECOND HOLD */
+#welcomePage .card{
+    background:
+        linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.15)),
+        linear-gradient(45deg, rgba(255,107,157,0.1), rgba(196,69,105,0.08));
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    animation:
+        welcomeEntrance 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        welcomeHold 5s ease-in-out 1.5s,
+        welcomeFloat 6s ease-in-out infinite 6.5s,
+        welcomePulse 4s ease-in-out infinite 7s
+}
+
+@keyframes welcomeEntrance{
+    0%{
+        opacity:0;
+        transform:scale(0.5);
+        filter:blur(10px)
+    }
+    100%{
+        opacity:1;
+        transform:scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes welcomeHold{
+    0%, 100%{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+@keyframes welcomeFloat{
+    0%, 100%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-12px) scale(1.02)}
+}
+
+@keyframes welcomePulse{
+    0%, 100%{box-shadow:0 15px 45px rgba(0,0,0,.3), 0 0 0 rgba(255,107,157,.2)}
+    50%{box-shadow:0 20px 60px rgba(0,0,0,.4), 0 0 25px rgba(255,107,157,.5)}
+}
+
+.welcome-title{
+    font-size:clamp(1.8rem,6vw,2.4rem);
+    background:linear-gradient(45deg, #fff, #ff9ff3, #fff, #f8b500);
+    background-size:300% 300%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    margin-bottom:3vw;
+    animation:
+        titleEntrance 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both,
+        titleGradient 6s ease infinite 2.5s,
+        titleFloat 6s ease-in-out infinite 3s;
+    font-weight:bold;
+    letter-spacing:3px;
+    position:relative;
+    text-shadow:0 0 20px rgba(255,255,255,0.3)
+}
+
+.welcome-title::before{
+    content:'✨';
+    position:absolute;
+    left:-50px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:2rem;
+    animation:sparkleLeft 4s ease-in-out infinite
+}
+
+.welcome-title::after{
+    content:'✨';
+    position:absolute;
+    right:-50px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:2rem;
+    animation:sparkleRight 4s ease-in-out infinite 2s
+}
+
+@keyframes titleEntrance{
+    0%{
+        opacity:0;
+        transform:translateY(-20px) scale(0.8);
+        filter:blur(8px)
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes titleGradient{
+    0%, 100%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+}
+
+@keyframes titleFloat{
+    0%, 100%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-5px) scale(1.03)}
+}
+
+@keyframes sparkleLeft{
+    0%, 100%{transform:translateY(-50%) scale(0.8)}
+    50%{transform:translateY(-60%) scale(1.3)}
+}
+
+@keyframes sparkleRight{
+    0%, 100%{transform:translateY(-50%) scale(0.8)}
+    50%{transform:translateY(-40%) scale(1.3)}
+}
+
+.welcome-message{
+    font-size:clamp(1rem,4vw,1.3rem);
+    color:#fff;
+    line-height:1.8;
+    margin-bottom:3vw;
+    text-shadow:2px 2px 8px rgba(0,0,0,.7);
+    font-style:italic;
+    font-weight:600;
+    animation:
+        messageSlide 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s both,
+        messageGlow 5s ease-in-out infinite 3s;
+    position:relative
+} 
+
+@keyframes messageSlide{
+    0%{
+        opacity:0;
+        transform:translateX(-30px);
+        filter:blur(5px)
+    }
+    100%{
+        opacity:1;
+        transform:translateX(0);
+        filter:blur(0px)
+    }
+}
+
+@keyframes messageGlow{
+    0%, 100%{text-shadow:2px 2px 8px rgba(0,0,0,.7), 0 0 8px rgba(255,255,255,0.2)}
+    50%{text-shadow:2px 2px 8px rgba(0,0,0,.7), 0 0 20px rgba(255,255,255,0.5)}
+}
+
+/* BIRTHDAY PAGE ANIMATIONS - VISIBLE BACKGROUND & TEXT */
+#birthdayPage .card{
+    background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)),
+        linear-gradient(45deg, rgba(255, 182, 193, 0.3), rgba(255, 160, 180, 0.2)),
+        url('./download.jpeg');
+    background-size:cover; 
+    background-position: center;          
+    background-repeat: no-repeat;
+    backdrop-filter: blur(30 px);
+    -webkit-backdrop-filter: blur(15px);
+    animation:
+        birthdayEntrance 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        birthdayFloat 6s ease-in-out infinite 1.8s,
+        birthdayGlow 5s ease-in-out infinite 2.5s;
+    position:relative;
+    border:2px solid rgba(255,255,255,.4)
+}
+
+#birthdayPage .card::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 40%),
+        radial-gradient(circle at 75% 75%, rgba(255,107,157,0.08) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(248,181,0,0.06) 0%, transparent 30%);
+    animation:gentleShimmer 12s ease-in-out infinite;
+    pointer-events:none;
+    border-radius:inherit;
+    mix-blend-mode:overlay
+}
+
+#birthdayPage .card::after{
+    content:'🎈 🎂 🎉 🎊 🎁 🌟';
+    position:absolute;
+    top:-5px;
+    right:-5px;
+    font-size:1.1rem;
+    animation:gentleEmojiFloat 8s ease-in-out infinite;
+    pointer-events:none;
+    z-index:10;
+    letter-spacing:5px
+}
+
+@keyframes birthdayEntrance{
+    0%{
+        opacity:0;
+        transform:scale(0.7);
+        filter:blur(12px)
+    }
+    100%{
+        opacity:1;
+        transform:scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes birthdayFloat{
+    0%, 100%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-8px) scale(1.02)}
+}
+
+@keyframes birthdayGlow{
+    0%, 100%{
+        box-shadow:
+            0 15px 45px rgba(0,0,0,.3),
+            0 0 0 rgba(255,107,157,.2);
+        filter:brightness(1)
+    }
+    50%{
+        box-shadow:
+            0 20px 60px rgba(0,0,0,.4),
+            0 0 30px rgba(255,107,157,.6);
+        filter:brightness(1.1)
+    }
+}
+
+@keyframes gentleShimmer{
+    0%, 100%{
+        background:
+            radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 40%),
+            radial-gradient(circle at 75% 75%, rgba(255,107,157,0.08) 0%, transparent 40%),
+            radial-gradient(circle at 50% 50%, rgba(248,181,0,0.06) 0%, transparent 30%);
+        transform:scale(1)
+    }
+    50%{
+        background:
+            radial-gradient(circle at 75% 75%, rgba(255,255,255,0.15) 0%, transparent 40%),
+            radial-gradient(circle at 25% 25%, rgba(255,107,157,0.12) 0%, transparent 40%),
+            radial-gradient(circle at 50% 50%, rgba(248,181,0,0.1) 0%, transparent 30%);
+        transform:scale(1.01)
+    }
+}
+
+@keyframes gentleEmojiFloat{
+    0%, 100%{transform:translateY(0) scale(1)}
+    25%{transform:translateY(-8px) scale(1.1)}
+    50%{transform:translateY(-4px) scale(0.95)}
+    75%{transform:translateY(-10px) scale(1.05)}
+}
+
+.birthday-title{
+    font-size:clamp(2rem,7vw,2.6rem);
+    color:#c44569;
+    text-shadow:
+        4px 4px 12px rgba(0,0,0,.9), 
+        2px 2px 6px rgba(255,255,255,.9), 
+        0 0 25px rgba(196,69,105,0.7),
+        -1px -1px 2px rgba(255,255,255,.8);
+    margin-bottom:4vw;
+    animation:
+        titleSpectacular 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both,
+        rainbowGlow 4s ease-in-out infinite 2.5s,
+        titleBounce 4s ease-in-out infinite 3s;
+    font-weight:bold;
+    position:relative;
+    z-index:10;
+    letter-spacing:2px
+}
+
+.birthday-title::before{
+    content:'🌟';
+    position:absolute;
+    left:-60px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:2.2rem;
+    animation:starGentle 6s ease-in-out infinite
+}
+
+.birthday-title::after{
+    content:'🌟';
+    position:absolute;
+    right:-60px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:2.2rem;
+    animation:starGentle 6s ease-in-out infinite 3s
+}
+
+@keyframes titleSpectacular{
+    0%{
+        opacity:0;
+        transform:translateY(-40px) scale(0.7);
+        filter:blur(15px)
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes rainbowGlow{
+    0%, 100%{
+        color:#c44569;
+        text-shadow:
+            4px 4px 12px rgba(0,0,0,.9), 
+            2px 2px 6px rgba(255,255,255,.9), 
+            0 0 25px rgba(196,69,105,0.7),
+            -1px -1px 2px rgba(255,255,255,.8)
+    }
+    25%{
+        color:#ff6b9d;
+        text-shadow:
+            4px 4px 12px rgba(0,0,0,.9), 
+            2px 2px 6px rgba(255,255,255,.9), 
+            0 0 30px rgba(255,107,157,0.8),
+            -1px -1px 2px rgba(255,255,255,.8)
+    }
+    50%{
+        color:#f8b500;
+        text-shadow:
+            4px 4px 12px rgba(0,0,0,.9), 
+            2px 2px 6px rgba(255,255,255,.9), 
+            0 0 35px rgba(248,181,0,0.9),
+            -1px -1px 2px rgba(255,255,255,.8)
+    }
+    75%{
+        color:#ff9ff3;
+        text-shadow:
+            4px 4px 12px rgba(0,0,0,.9), 
+            2px 2px 6px rgba(255,255,255,.9), 
+            0 0 30px rgba(255,159,243,0.8),
+            -1px -1px 2px rgba(255,255,255,.8)
+    }
+}
+
+@keyframes titleBounce{
+    0%, 100%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-6px) scale(1.05)}
+}
+
+@keyframes starGentle{
+    0%, 100%{
+        transform:translateY(-50%) scale(0.9);
+        filter:drop-shadow(0 0 8px gold)
+    }
+    50%{
+        transform:translateY(-60%) scale(1.2);
+        filter:drop-shadow(0 0 15px gold)
+    }
+}
+
+.birthday-message{
+    font-size:clamp(1rem,4vw,1.3rem);
+    color:#8535cf;
+    line-height:1.8;
+    margin-bottom:4vw;
+    text-shadow:
+        3px 3px 10px rgba(0,0,0,.8), 
+        1px 1px 4px rgba(255,255,255,.9), 
+        0 0 20px rgba(133,53,207,0.6),
+        -1px -1px 2px rgba(255,255,255,.7);
+    animation:
+        messageSpectacular 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s both,
+        messageFloat 6s ease-in-out infinite 2.5s;
+    position:relative;
+    z-index:10;
+    font-weight:700
+}
+
+@keyframes messageSpectacular{
+    0%{
+        opacity:0;
+        transform:translateY(30px) scale(0.8);
+        filter:blur(10px)
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes messageFloat{
+    0%, 100%{
+        transform:translateY(0) scale(1);
+        text-shadow:
+            3px 3px 10px rgba(0,0,0,.8), 
+            1px 1px 4px rgba(255,255,255,.9), 
+            0 0 20px rgba(133,53,207,0.6),
+            -1px -1px 2px rgba(255,255,255,.7)
+    }
+    50%{
+        transform:translateY(-3px) scale(1.02);
+        text-shadow:
+            3px 3px 10px rgba(0,0,0,.8), 
+            1px 1px 4px rgba(255,255,255,.9), 
+            0 0 30px rgba(133,53,207,0.9),
+            -1px -1px 2px rgba(255,255,255,.7)
+    }
+}
+
+/* STORY PAGE ANIMATIONS */
+#storyPage .card{
+    background:
+        linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95)),
+        linear-gradient(45deg, rgba(255,107,157,0.03), rgba(248,181,0,0.03));
+    max-height:82vh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    border:2px solid rgba(255,107,157,.3);
+    animation:
+        storyReveal 2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        storyGlow 8s ease-in-out infinite 2s;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(255,107,157,.6) rgba(255,107,157,.1);
+    position:relative
+}
+
+#storyPage .card::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:6px;
+    background:linear-gradient(90deg, #ff6b9d, #c44569, #f8b500, #ff9ff3, #667eea);
+    background-size:200% 100%;
+    animation:progressFlow 3s ease-out, progressPulse 4s ease-in-out infinite 3s;
+    border-radius:30px 30px 0 0;
+    z-index:1
+}
+
+@keyframes storyReveal{
+    0%{
+        opacity:0;
+        transform:translateY(50px) scale(0.95);
+        filter:blur(10px)
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes storyGlow{
+    0%, 100%{
+        box-shadow:0 15px 45px rgba(0,0,0,.3), 0 0 0 rgba(255,107,157,.2);
+        border-color:rgba(255,107,157,.3)
+    }
+    50%{
+        box-shadow:0 20px 60px rgba(0,0,0,.4), 0 0 25px rgba(255,107,157,.5);
+        border-color:rgba(255,107,157,.6)
+    }
+}
+
+@keyframes progressFlow{
+    0%{width:0%; background-position:0% 50%}
+    100%{width:100%; background-position:100% 50%}
+}
+
+@keyframes progressPulse{
+    0%, 100%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+}
+
+#storyPage .card::-webkit-scrollbar{
+    width:8px
+}
+
+#storyPage .card::-webkit-scrollbar-track{
+    background:linear-gradient(180deg, rgba(255,107,157,.08), rgba(248,181,0,.08));
+    border-radius:4px
+}
+
+#storyPage .card::-webkit-scrollbar-thumb{
+    background:linear-gradient(180deg, #ff6b9d, #c44569, #f8b500);
+    border-radius:4px;
+    transition:all 0.3s ease
+}
+
+#storyPage .card::-webkit-scrollbar-thumb:hover{
+    background:linear-gradient(180deg, #c44569, #ff6b9d, #667eea);
+    transform:scale(1.1)
+}
+
+.story-title{
+    font-size:clamp(1.8rem,6vw,2.4rem);
+    background:linear-gradient(45deg, #c44569, #ff6b9d, #f8b500);
+    background-size:200% 200%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    margin-bottom:2vw;
+    animation:
+        titleWave 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both,
+        titleShimmer 6s ease-in-out infinite 2s;
+    font-weight:bold;
+    position:relative
+}
+
+.story-title::after{
+    content:'';
+    position:absolute;
+    bottom:-6px;
+    left:0;
+    width:0;
+    height:3px;
+    background:linear-gradient(90deg, #ff6b9d, #c44569, #f8b500);
+    border-radius:2px;
+    animation:underlineGrow 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s forwards
+}
+
+@keyframes titleWave{
+    0%{
+        opacity:0;
+        transform:translateX(-50px) scale(0.9);
+        filter:blur(8px)
+    }
+    100%{
+        opacity:1;
+        transform:translateX(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes titleShimmer{
+    0%, 100%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+}
+
+@keyframes underlineGrow{
+    0%{width:0; opacity:0}
+    100%{width:100%; opacity:1}
+}
+
+.story-subtitle{
+    font-size:clamp(1rem,3.5vw,1.2rem);
+    color:#666;
+    font-style:italic;
+    margin-bottom:3vw;
+    animation:
+        subtitleFloat 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both,
+        subtitleGlow 6s ease-in-out infinite 2.5s
+}
+
+@keyframes subtitleFloat{
+    0%{
+        opacity:0;
+        transform:translateX(50px) scale(0.9);
+        filter:blur(6px)
+    }
+    100%{
+        opacity:1;
+        transform:translateX(0) scale(1);
+        filter:blur(0px)
+    }
+}
+
+@keyframes subtitleGlow{
+    0%, 100%{color:#666; text-shadow:none}
+    50%{color:#888; text-shadow:0 0 8px rgba(102,102,102,0.4)}
+}
+
+.story-content{
+    font-size:clamp(1rem,4vw,1.2rem);
+    line-height:1.9;
+    color:#333;
+    text-align:justify;
+    padding:4vw;
+    background:
+        linear-gradient(135deg, rgba(248,181,0,.06), rgba(255,107,157,.04)),
+        linear-gradient(45deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+    border-radius:25px;
+    border-left:5px solid transparent;
+    border-image:linear-gradient(180deg, #f8b500, #ff6b9d) 1;
+    animation:
+        contentReveal 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s both,
+        contentFloat 6s ease-in-out infinite 3s;
+    transition:all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position:relative;
+    overflow:hidden
+}
+
+.story-content::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(90deg, transparent, rgba(248,181,0,0.2), rgba(255,107,157,0.15), transparent);
+    animation:contentShine 6s ease-in-out 3.5s infinite;
+    pointer-events:none
+}
+
+.story-content:hover{
+    background:
+        linear-gradient(135deg, rgba(248,181,0,.1), rgba(255,107,157,.08)),
+        linear-gradient(45deg, rgba(255,255,255,0.95), rgba(255,255,255,0.98));
+    transform:translateY(-3px) scale(1.01);
+    box-shadow:0 10px 30px rgba(248,181,0,.3);
+    border-left-width:8px;
+    transition:all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+}
+
+@keyframes contentReveal{
+    0%{
+        opacity:0;
+        transform:scale(0.95) translateY(20px);
+        filter:blur(8px)
+    }
+    100%{
+        opacity:1;
+        transform:scale(1) translateY(0);
+        filter:blur(0px)
+    }
+}
+
+@keyframes contentFloat{
+    0%, 100%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-2px) scale(1.005)}
+}
+
+@keyframes contentShine{
+    0%{left:-100%; opacity:0}
+    50%{left:50%; opacity:1}
+    100%{left:100%; opacity:0}
+}
+
+/* Enhanced responsive design */
+@media (max-width: 480px){
+    .page{padding:1vw}
+    .card{
+        width:95%;
+        padding:6vw 5vw;
+        border-radius:25px
+    }
+    #storyPage .card{max-height:85vh}
+    
+    body::after{
+        font-size:clamp(1rem, 4vw, 1.8rem);
+        animation-duration:25s
+    }
+    
+    .birthday-title::before,
+    .birthday-title::after{
+        font-size:1.5rem;
+        left:-30px;
+        right:-30px
+    }
+    
+    .welcome-title::before,
+    .welcome-title::after{
+        font-size:1.5rem;
+        left:-30px;
+        right:-30px
+    }
+}
+
+@media (min-width: 768px){
+    .card{
+        max-width:500px;
+        padding:3vw 4vw
+    }
+}
+
+@media (min-width: 1024px){
+    .card{
+        max-width:600px;
+        padding:2vw 3vw
+    }
+}
+
+/* Smooth focus states for accessibility */
+.card:focus-visible{
+    outline:3px solid rgba(255,107,157,.7);
+    outline-offset:4px;
+    animation:focusPulse 2s ease-in-out infinite
+}
+
+@keyframes focusPulse{
+    0%, 100%{outline-color:rgba(255,107,157,.7)}
+    50%{outline-color:rgba(255,107,157,1)}
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce){
+    *{
+        animation-duration:0.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:0.01ms !important
+    }
+    
+    body::before,
+    body::after{
+        animation:none;
+        opacity:0.2
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high){
+    .card{
+        border:3px solid #000;
+        background:rgba(255,255,255,.98) !important
+    }
+    .welcome-title, .birthday-title, .story-title{
+        -webkit-text-fill-color:initial !important;
+        color:#000 !important;
+        text-shadow:none !important
+    }
+    .welcome-message, .birthday-message{
+        color:#000 !important;
+        text-shadow:none !important
+    }
 }
 </style>
+
 </head>
 <body>
 
@@ -525,7 +2330,7 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:'Georgia',serif;
 </pre>
         </div>
 
-        <p style="text-align:center;font-style:italic;color:#3b00dd;margin-top:3vw">
+        <p style="text-align:center;font-style:italic;color:#ffffff;margin-top:3vw">
             "কথাগুলো ভালো না লাগলে আমি আন্তরিকভাবে দুঃখিত"
         </p>
 
@@ -539,21 +2344,21 @@ function showStoryPage(){document.getElementById('welcomePage').classList.remove
 
 /* Sparkles on birthday card */
 function createSparkles(e){
-    const emojis=['sparkle','star','dizzy','glowing_star','heart','two_hearts'];
-    const c=e.currentTarget;
-    for(let i=0;i<6;i++){
-        const s=document.createElement('div');
-        s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-        s.style.position='absolute';s.style.fontSize='12px';s.style.pointerEvents='none';
-        const r=c.getBoundingClientRect();
-        const x=e.clientX-r.left+(Math.random()-.5)*100;
-        const y=e.clientY-r.top+(Math.random()-.5)*50;
-        s.style.left=x+'px';s.style.top=y+'px';
-        s.style.animation='sparkleFloat 3s ease-out forwards';
-        c.appendChild(s);
-        setTimeout(()=>s.remove(),3000);
-    }
-}
+            const emojis=['💖','🌹','🎂','🎉','💐','🌸','💕','🎈','🌺','🥳','💝','🌷','🎁','💗','🌻','🎊','💞','🌼'];
+            const c=e.currentTarget;
+            for(let i=0;i<6;i++){
+                const s=document.createElement('div');
+                s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+                s.style.position='absolute';s.style.fontSize='12px';s.style.pointerEvents='none';
+                const r=c.getBoundingClientRect();
+                const x=e.clientX-r.left+(Math.random()-.5)*100;
+                const y=e.clientY-r.top+(Math.random()-.5)*50;
+                s.style.left=x+'px';s.style.top=y+'px';
+                s.style.animation='sparkleFloat 3s ease-out forwards';
+                c.appendChild(s);
+                setTimeout(()=>s.remove(),3000);
+            }
+        }
 
 /* Auto-switch after welcome */
 setTimeout(()=>{showBirthdayPage();},4000);
